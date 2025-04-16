@@ -7,7 +7,7 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children : any}) => {
-    const [user, setUser]= useState(() => {
+    const [user]= useState(() => {
         return { name:'AJMAL', email:"ajmal@gmail.com"}
     });
     return(
