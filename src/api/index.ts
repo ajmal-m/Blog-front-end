@@ -1,7 +1,7 @@
 import BackEnd from "../config";
 
-// Get Users List
-export const getUsers = async() => {
+// Get  all Posts
+export const getPosts = async() => {
     const {data} = await BackEnd.get('/post/posts');
     return data;
 };

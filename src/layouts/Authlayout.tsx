@@ -1,16 +1,14 @@
-import { NavLink, Outlet } from "react-router";
-
+import {  Outlet } from "react-router";
+import Navbar from "../component/Navbar";
+import Footer from "../component/Footer";
 
 function Authlayout() {
     console.log("AuthLayout ==> ")
     return (
         <>
-            <h2>Navbar</h2>
-            <NavLink to={'/signin'}>
-                Signin
-            </NavLink>
+            {/* <Navbar/> */}
             <Outlet/>
-            <h2>Footer</h2>
+            {/* <Footer/> */}
         </>
     );
 }
