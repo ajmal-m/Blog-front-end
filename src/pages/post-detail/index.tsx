@@ -4,6 +4,7 @@ import Loader from "../../component/Loader";
 import { useEffect, useState } from "react";
 import {ToastContainer, toast} from 'react-toastify';
 import { Post } from "../../types";
+import PostDetails from "./post-detail";
 
 export default function PostDetail() {
     const {postId} = useParams();
@@ -30,11 +31,9 @@ export default function PostDetail() {
             loading ? (
                 <Loader/>
             ) : (
-                <div>
-                    <h1>Post detail</h1>
-                    <h2>{post?.title}</h2>
-                    <h2>{post?.description}</h2>
-                </div>
+                <PostDetails
+                 post={post}
+                />
             )
         }
         <ToastContainer />
