@@ -1,6 +1,8 @@
 import { NavLink } from "react-router";
+import { useAuth } from "../hooks/authContext";
 
 const Navbar = () => {
+  const {user} = useAuth();
   return (
     <nav className="bg-white dark:bg-gray-900 w-full z-20 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -23,6 +25,15 @@ const Navbar = () => {
                     to={'/post-create'}
                   >
                       Create
+                  </NavLink>
+              </button>
+            </li>
+            <li  className="flex items-center">
+              <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <NavLink 
+                    to={'/post-create'}
+                  >
+                      { user ? user.name : 'Guest'}
                   </NavLink>
               </button>
             </li>

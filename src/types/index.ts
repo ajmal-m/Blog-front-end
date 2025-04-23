@@ -4,3 +4,11 @@ export type Post = {
     _id?:string;
     createdAt?:string;
 }
+
+
+export type User = {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword ?: string;
+}

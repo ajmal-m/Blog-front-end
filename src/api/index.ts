@@ -1,5 +1,5 @@
 import BackEnd from "../config";
-import { Post } from "../types";
+import { Post, User } from "../types";
 
 // Get  all Posts
 export const getPosts = async() => {
@@ -30,5 +30,12 @@ export const UpdatePost = async ({ postId, postData }: { postId: string | undefi
         id: postId,
         ...postData
     });
+    return data;
+}
+
+
+// Sign Up / Create User
+export const CreateUser = async ({ userData} :{ userData: User}) => {
+    const {data} = await BackEnd.post('/auth/sign-up', { ...userData});
     return data;
 }

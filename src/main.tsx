@@ -4,10 +4,11 @@ import {BrowserRouter, Route, Routes} from 'react-router';
 import Authlayout from './layouts/Authlayout.tsx';
 import MainLayout from './layouts/MainLayout.tsx';
 import { AuthProvider } from './hooks/authContext.tsx';
-import SigIn from './pages/sign-in/index.tsx';
 import Posts from './pages/posts/index.tsx';
 import PostDetail from './pages/post-detail/index.tsx';
 import PostCreate from './pages/post-create/index.tsx';
+import Login from './pages/log-in/index.tsx';
+import SignUp from './pages/sign-up/index.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -20,8 +21,8 @@ createRoot(document.getElementById('root')!).render(
             <Route path='/post-create' element={<PostCreate/>}/>
           </Route>
           <Route path='/' element={<Authlayout/>}>
-            <Route path='/login' element={<SigIn/>}/>
-            <Route path='/signin' element={<SigIn/>}/>
+            <Route path='/auth/login' element={<Login/>}/>
+            <Route path='/auth/sign-up' element={<SignUp/>}/>
           </Route>
         </Routes>
     </AuthProvider>
