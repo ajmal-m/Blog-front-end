@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { VerifyToken } from "../api";
 
 
 type AuthContextType = {
@@ -17,7 +18,7 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children : any}) => {
-    const [user, setUser]= useState<{ name: string; email: string;}>();
+    const [user, setUser]= useState<{ name: string; email: string;} | undefined>();
 
     const updateUser = ({ name, email}: { name:string; email: string;}) => {
         setUser({
@@ -25,6 +26,27 @@ export const AuthProvider = ({ children }: { children : any}) => {
             email
         })
     };
+
+
+    const logOut = () => {
+        localStorage.removeItem("token");
+        setUser(undefined);
+    }
+
+
+    useEffect(() => {
+        const veriftyToken = async () => {
+          const response =  await VerifyToken();
+          if(response.success){
+            setUser({
+                name:response?.user?.name,
+                email: response?.user?.email
+            })
+          }
+        }
+
+        veriftyToken();
+    }, [])
 
 
     return(

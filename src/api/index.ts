@@ -39,3 +39,10 @@ export const CreateUser = async ({ userData} :{ userData: User}) => {
     const {data} = await BackEnd.post('/auth/sign-up', { ...userData});
     return data;
 }
+
+
+// Verify the token
+export const VerifyToken = async() => {
+    const {data} = await  BackEnd.get('/auth/verify-token');
+    return data;
+}
