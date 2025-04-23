@@ -7,6 +7,7 @@ import { AuthProvider } from './hooks/authContext.tsx';
 import SigIn from './pages/sign-in/index.tsx';
 import Posts from './pages/posts/index.tsx';
 import PostDetail from './pages/post-detail/index.tsx';
+import PostCreate from './pages/post-create/index.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path='/' element={<MainLayout/>}>
             <Route path='/' element={<Posts/>}/>
             <Route path='/post/:postId' element={<PostDetail/>}/>
+            <Route path='/post-create' element={<PostCreate/>}/>
           </Route>
           <Route path='/' element={<Authlayout/>}>
             <Route path='/login' element={<SigIn/>}/>
