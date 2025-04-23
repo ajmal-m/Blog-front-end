@@ -4,7 +4,8 @@ import { VerifyToken } from "../api";
 
 type AuthContextType = {
     user ? : { name : string; email: string;},
-    updateUser : (user : {name: string; email: string;}) => void
+    updateUser : (user : {name: string; email: string;}) => void,
+    logOut ?: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,7 +51,7 @@ export const AuthProvider = ({ children }: { children : any}) => {
 
 
     return(
-        <AuthContext.Provider value={{ user, updateUser}}>
+        <AuthContext.Provider value={{ user, updateUser, logOut}}>
             {children}
         </AuthContext.Provider>
     );
