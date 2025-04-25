@@ -34,7 +34,8 @@ function SignUpForm() {
         localStorage.setItem("token", response.token);
         updateUser({
             name:response?.user?.name,
-            email: response?.user?.email
+            email: response?.user?.email,
+            loggedIn:true
         });
         navigate("/");
     }

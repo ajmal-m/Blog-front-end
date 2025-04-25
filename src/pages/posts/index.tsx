@@ -8,6 +8,8 @@ export default function Posts() {
 
     const [posts, setPosts] = useState([]);
 
+    console.log("Posts")
+
     useEffect(() => {
         const fetchPosts = async() => {
             const data = await getPosts();
@@ -22,7 +24,7 @@ export default function Posts() {
                 {
                     posts.length ? (
                         posts.map((item: Post) => (
-                           <PostCard post={item}/>
+                           <PostCard post={item} key={item._id}/>
                         ))
                     ) : (
                         <Loader/>

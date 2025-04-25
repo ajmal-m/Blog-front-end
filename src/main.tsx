@@ -11,7 +11,6 @@ import Login from './pages/log-in/index.tsx';
 import SignUp from './pages/sign-up/index.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
     <BrowserRouter>
     <AuthProvider>
         <Routes>
@@ -27,5 +26,4 @@ createRoot(document.getElementById('root')!).render(
         </Routes>
     </AuthProvider>
     </BrowserRouter>
-  </StrictMode>,
 )

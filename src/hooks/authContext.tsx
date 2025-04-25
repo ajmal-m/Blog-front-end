@@ -3,9 +3,9 @@ import { VerifyToken } from "../api";
 
 
 type AuthContextType = {
-    user ? : { name : string; email: string;},
-    updateUser : (user : {name: string; email: string;}) => void,
-    logOut ?: () => void
+    user ? : { name ?: string; email ?: string; loggedIn ?: boolean;};
+    updateUser : (user : {name ?: string; email ?: string; loggedIn ?: boolean}) => void;
+    logOut ?:any
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,40 +19,62 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children : any}) => {
-    const [user, setUser]= useState<{ name: string; email: string;} | undefined>();
+    const [user, setUser]= useState<{ name ?: string; email ?: string; loggedIn ?: boolean;}>();
+    const [loading, setLoading] = useState(true);
 
-    const updateUser = ({ name, email}: { name:string; email: string;}) => {
+    const updateUser = ({ name, email, loggedIn}: { name ?:string; email ?: string; loggedIn ?: boolean;}) => {
         setUser({
             name,
-            email
+            email,
+            loggedIn
         })
     };
 
 
     const logOut = () => {
         localStorage.removeItem("token");
-        setUser(undefined);
-    }
+        setUser({ loggedIn : false});
+    };
+
+
+    console.log("Auth context");
 
 
     useEffect(() => {
         const veriftyToken = async () => {
-          const response =  await VerifyToken();
-          if(response.success){
+         try {
+            const response =  await VerifyToken();
+            if(response.success){
+              setUser({
+                  name:response?.user?.name,
+                  email: response?.user?.email,
+                  loggedIn : true
+              })
+            }else{
+              setUser({
+                loggedIn:false
+              })
+            }
+            setLoading(false);
+         } catch (error) {
+            console.log("HAI")
             setUser({
-                name:response?.user?.name,
-                email: response?.user?.email
+                loggedIn:false
             })
-          }
+            setLoading(false);
+         }
         }
 
         veriftyToken();
+
     }, [])
 
 
     return(
         <AuthContext.Provider value={{ user, updateUser, logOut}}>
-            {children}
+            { !loading && (
+                children
+            )}
         </AuthContext.Provider>
     );
 };

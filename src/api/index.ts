@@ -46,3 +46,10 @@ export const VerifyToken = async() => {
     const {data} = await  BackEnd.get('/auth/verify-token');
     return data;
 }
+
+
+// LogIn/ Sign In
+export const LogInUser = async ({ logInData} : { logInData : {  email: string; password: string} }) => {
+    const {data} = await BackEnd.post('/auth/sign-in', {...logInData});
+    return data;
+}
