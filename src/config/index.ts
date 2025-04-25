@@ -4,9 +4,9 @@ const local = window.location.host.includes('localhost') ;
 
 const instance = axios.create({
     baseURL: local ? "http://localhost:3000/" : import.meta.env.BACK_END_URL,
-    timeout:1000,
+    timeout:10000,
     headers:{
-        'Access-token': `${localStorage.getItem('token')}`,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Accept':'/',
         'Content-Type':'application/json'
     }
