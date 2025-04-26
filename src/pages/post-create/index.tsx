@@ -1,9 +1,11 @@
 import { Editor } from "../../editor";
+import Navbar from "../../component/Editor/Navbar";
 
 function PostCreate() {
   return (
     <>
-        <div className="flex items-center justify-center">
+        <div className="flex flex-col h-screen">
+            <Navbar/>
             <Editor/>
         </div>
     </>
