@@ -1,7 +1,9 @@
 import { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import {BrowserRouter, Route, Routes} from 'react-router';
+
 import { AuthProvider } from './hooks/authContext.tsx';
+import { EditorContextProvider } from './hooks/editorContext.tsx';
 
 const Authlayout = lazy(() => import("./layouts/Authlayout.tsx"));
 const MainLayout = lazy(() => import("./layouts/MainLayout.tsx"));
@@ -17,11 +19,10 @@ import LayoutLoader from './component/Loader/layout-loader.tsx';
 import SingleLoader from './component/Loader/single-loader.tsx';
 
 
-const LoadingFallback = () => <div>Loading...</div>;
-
 createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
     <AuthProvider>
+      <EditorContextProvider>
         <Routes>
           <Route path='/' element={
             <Suspense fallback={<LayoutLoader/>}>
@@ -67,6 +68,7 @@ createRoot(document.getElementById('root')!).render(
             }/>
           </Route>
         </Routes>
+      </EditorContextProvider>
     </AuthProvider>
     </BrowserRouter>
 )
