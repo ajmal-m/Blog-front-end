@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from 'react-router';
 
 import { AuthProvider } from './hooks/authContext.tsx';
 import { EditorContextProvider } from './hooks/editorContext.tsx';
+import { ThemeProvider } from './hooks/themeContext.tsx';
 
 const Authlayout = lazy(() => import("./layouts/Authlayout.tsx"));
 const MainLayout = lazy(() => import("./layouts/MainLayout.tsx"));
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
     <AuthProvider>
       <EditorContextProvider>
+        <ThemeProvider>
         <Routes>
           <Route path='/' element={
             <Suspense fallback={<LayoutLoader/>}>
@@ -68,6 +70,7 @@ createRoot(document.getElementById('root')!).render(
             }/>
           </Route>
         </Routes>
+        </ThemeProvider>
       </EditorContextProvider>
     </AuthProvider>
     </BrowserRouter>

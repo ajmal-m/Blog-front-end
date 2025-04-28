@@ -41,6 +41,10 @@ export default function PostCard({ post }: {post : Post}) {
             </svg>
         </NavLink>
     </div>
+
+    {/* <div className="w-[318px] h-[412px] bg-[#1c1f26] dark:bg-[#1c1f26] rounded-[16px] border border-[#a8b3cf] dark:border-[#a8b3cf] p-[8px]">
+
+    </div> */}
    </>
   )
 }

@@ -1,4 +1,5 @@
-import { UseEditor } from "../../hooks/editorContext"
+import { UseEditor } from "../../hooks/editorContext";
+import { Component } from "./Preview";
 
 export default function Navbar() {
   const { theme , updateTheme} = UseEditor();
@@ -14,6 +15,7 @@ export default function Navbar() {
               theme === 'dark' ? "Dark" : "Light"
             }
           </button>
+          <Component/>
         </div>
     </>
   )
