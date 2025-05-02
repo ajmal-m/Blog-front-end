@@ -65,6 +65,8 @@ import { useWindowSize } from "../../../hooks/use-window-size"
 // --- Components ---
 import { ThemeToggle } from "../../tiptap-templates/simple/theme-toggle"
 
+import Preview from '../../tiptap-templates/simple/preview/preview'
+
 // --- Lib ---
 import { handleImageUpload, MAX_FILE_SIZE } from "../../../lib/tiptap-utils"
 
@@ -141,6 +143,12 @@ const MainToolbarContent = ({
       <Spacer />
 
       {isMobile && <ToolbarSeparator />}
+
+      <ToolbarGroup>
+        <Preview />
+      </ToolbarGroup>
+
+      <ToolbarSeparator />
 
       <ToolbarGroup>
         <ThemeToggle />
