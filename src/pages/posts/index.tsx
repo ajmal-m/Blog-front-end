@@ -4,6 +4,7 @@ import Loader from "../../component/Loader";
 import { Post } from "../../types";
 import PostCard from "../../component/PostCard";
 import { UseTheme } from "../../hooks/themeContext";
+import './index.css'
 
 export default function Posts() {
 
@@ -26,7 +27,7 @@ export default function Posts() {
             <div className={`min-h-[calc(100vh-73px)] overflow-y-scroll ${theme === 'dark' ? 'bg-[black]' : 'bg-[white]'}`} >
                 {
                     !loading && posts.length ? (
-                        <div className="grid grid-cols-4 gap-4 flex-wrap overflow-y-auto h-auto p-[16px]">
+                        <div className="grid-post-container">
                             {  
                                posts.map((item: Post) => (
                                     <PostCard post={item} key={item._id}/>

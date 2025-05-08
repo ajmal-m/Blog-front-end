@@ -5,7 +5,7 @@ export default function PostCard({ post }: {post : Post}) {
     console.log(post)
   return (
    <>
-    <div className="max-w-sm h-[200px] p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <div className="min-w-[10px] h-[200px] p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <div className="flex flex-col">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-active-color h-[96px] overflow-hidden">
                 {post.title}
