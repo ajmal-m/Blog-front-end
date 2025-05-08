@@ -12,8 +12,13 @@ export default function Preview() {
   return (
     <>
         <Button    onClick={getHTMLcontent}
-        data-style="ghost">
+        data-style="ghost" className='cursor-pointer'>
             Preview
+        </Button>
+
+        <Button    onClick={getHTMLcontent}
+        data-style="ghost" className='cursor-pointer'>
+            Publish
         </Button>
     </>
   )
