@@ -6,6 +6,10 @@ import {ToastContainer, toast} from 'react-toastify';
 import { Post } from "../../types";
 import PostDetails from "./post-detail";
 
+import '../../../@/styles/_keyframe-animations.scss';
+import '../../../@/styles/_variables.scss'
+import "../../../@/components/tiptap-templates/simple/simple-editor.scss"
+
 export default function PostDetail() {
     const {postId} = useParams();
     const [post, setPost] = useState<Post>();

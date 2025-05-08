@@ -3,6 +3,8 @@ export type Post = {
     description: string;
     _id?:string;
     createdAt?:string;
+    htmlContent?:string;
+    htmlObject?:Object
 }
 
 

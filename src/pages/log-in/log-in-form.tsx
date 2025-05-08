@@ -29,7 +29,7 @@ function LogInForm() {
         }
 
         localStorage.setItem("token", response.token);
-        updateUser({name: response?.user?.name, email: response?.user?.email, loggedIn: true});
+        updateUser({name: response?.user?.name, email: response?.user?.email, loggedIn: true , id: response?.user?.id});
         setLoading(false);
         navigate("/");
     }

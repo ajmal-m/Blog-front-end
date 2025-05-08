@@ -31,6 +31,7 @@
     "html-react-parser": "^5.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-html-parser": "^2.0.2",
     "react-router": "^7.5.0",
     "react-toastify": "^11.0.5",
     "reactjs-tiptap-editor": "^0.3.1"

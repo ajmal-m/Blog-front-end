@@ -35,7 +35,8 @@ function SignUpForm() {
         updateUser({
             name:response?.user?.name,
             email: response?.user?.email,
-            loggedIn:true
+            loggedIn:true,
+            id: response?.user?.id
         });
         navigate("/");
     }
