@@ -23,12 +23,16 @@ export default function Posts() {
     }, []);
     return (
         <>
-            <div className={`grid grid-cols-4 gap-4 flex-wrap overflow-y-auto h-auto p-[16px] ${theme === 'dark' ? 'bg-[black]' : 'bg-[white]'}`} >
+            <div className={`min-h-[calc(100vh-73px)] overflow-y-scroll ${theme === 'dark' ? 'bg-[black]' : 'bg-[white]'}`} >
                 {
                     !loading && posts.length ? (
-                        posts.map((item: Post) => (
-                           <PostCard post={item} key={item._id}/>
-                        ))
+                        <div className="grid grid-cols-4 gap-4 flex-wrap overflow-y-auto h-auto p-[16px]">
+                            {  
+                               posts.map((item: Post) => (
+                                    <PostCard post={item} key={item._id}/>
+                                ))
+                            }
+                        </div>
                     ) : loading && !posts.length ? (
                         <Loader/>
                     ):(

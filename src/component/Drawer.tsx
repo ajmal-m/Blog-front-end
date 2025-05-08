@@ -1,11 +1,11 @@
 
 "use client";
 
-import { Button, Drawer, DrawerHeader, DrawerItems } from "flowbite-react";
+import { Button, Drawer, DrawerItems } from "flowbite-react";
 import { useState } from "react";
 
 export function DrawerMenu() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => setIsOpen(false);
 

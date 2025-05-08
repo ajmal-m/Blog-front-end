@@ -29,15 +29,11 @@ export const handleImageUpload = async (
   abortSignal?: AbortSignal
 ): Promise<string> => {
   // Simulate upload progress
-  for (let progress = 0; progress <= 100; progress += 10) {
-    if (abortSignal?.aborted) {
-      throw new Error("Upload cancelled")
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    onProgress?.({ progress })
-  }
+  debugger
+  const file = _file;
+  const blobUrl = URL.createObjectURL(file);
 
-  return "/images/placeholder-image.png"
+  return blobUrl;
 
   // Uncomment to use actual file conversion:
   // return convertFileToBase64(file, abortSignal)
