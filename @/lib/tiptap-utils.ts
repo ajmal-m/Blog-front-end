@@ -25,8 +25,6 @@ export const isNodeInSchema = (nodeName: string, editor: Editor | null) =>
  */
 export const handleImageUpload = async (
   _file: File,
-  onProgress?: (event: { progress: number }) => void,
-  abortSignal?: AbortSignal
 ): Promise<string> => {
   // Simulate upload progress
   debugger
