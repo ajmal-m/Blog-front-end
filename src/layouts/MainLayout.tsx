@@ -19,12 +19,14 @@ export default function MainLayout() {
   
   return (
     <>
-       <div className="flex flex-col h-screen">
-          <Navbar/>
-          {
-            (user?.loggedIn) && <Outlet/>
-          }
-       </div>
+      {
+        user?.loggedIn && (
+          <div className="flex flex-col h-screen">
+            <Navbar/>
+            <Outlet/>
+          </div>
+        )
+      }
     </>
   )
 }

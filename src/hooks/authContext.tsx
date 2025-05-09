@@ -3,8 +3,8 @@ import { VerifyToken } from "../api";
 
 
 type AuthContextType = {
-    user ? : { name ?: string; email ?: string; loggedIn ?: boolean;};
-    updateUser : (user : {name ?: string; email ?: string; loggedIn ?: boolean}) => void;
+    user ? : { name ?: string; email ?: string; loggedIn ?: boolean; id ?: string;};
+    updateUser : (user : {name ?: string; email ?: string; loggedIn ?: boolean , id ?: string }) => void;
     logOut ?:any
 }
 
@@ -19,7 +19,7 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children : any}) => {
-    const [user, setUser]= useState<{ name ?: string; email ?: string; loggedIn ?: boolean;}>();
+    const [user, setUser]= useState<{ name ?: string; email ?: string; loggedIn ?: boolean; id?: string}>();
     const [loading, setLoading] = useState(true);
 
     const updateUser = ({ name, email, loggedIn}: { name ?:string; email ?: string; loggedIn ?: boolean;}) => {
@@ -48,7 +48,8 @@ export const AuthProvider = ({ children }: { children : any}) => {
               setUser({
                   name:response?.user?.name,
                   email: response?.user?.email,
-                  loggedIn : true
+                  loggedIn : true,
+                  id: response?.user?.id
               })
             }else{
               setUser({

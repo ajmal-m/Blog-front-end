@@ -53,3 +53,13 @@ export const LogInUser = async ({ logInData} : { logInData : {  email: string; p
     const {data} = await BackEnd.post('/auth/sign-in', {...logInData});
     return data;
 }
+
+
+export const createHtmlPost = async({ htmlContent, htmlObject, authorId} : { authorId: string | undefined;htmlContent: string; htmlObject: Object | undefined;}) => {
+    const {data} = await BackEnd.post('/post/create', {
+        htmlContent,
+        htmlObject,
+        authorId
+    });
+    return data;
+}

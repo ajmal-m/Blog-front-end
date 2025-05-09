@@ -3,8 +3,13 @@ export default {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode:'class',
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        'active-color':'red'
+      }
+    },
   },
   plugins: [],
 }
