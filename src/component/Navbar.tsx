@@ -63,15 +63,15 @@ const Navbar = () => {
               </li>
             )
            }
-            {location.pathname.includes("/post/") && (
-              <li>
-                  <ThemeToggle/>
-              </li>
-            )}
           </ul>
         </div>
         <div className="hidden max-sm:flex">
           <DrawerMenu/>
+        </div>
+        <div>
+            {location.pathname.includes("/post/") && (
+              <ThemeToggle/>
+            )}
         </div>
       </div>
     </nav>
