@@ -27,7 +27,7 @@ export default function Posts() {
             <div className={`min-h-[calc(100vh-73px)] overflow-y-scroll ${theme === 'dark' ? 'bg-[black]' : 'bg-[white]'}`} >
                 {
                     !loading && posts.length ? (
-                        <div className="grid-post-container">
+                        <div className="grid-post-container pb-[50px]">
                             {  
                                posts.map((item: Post) => (
                                     <PostCard post={item} key={item._id}/>
