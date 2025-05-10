@@ -56,11 +56,21 @@ export const LogInUser = async ({ logInData} : { logInData : {  email: string; p
 }
 
 
+// Create Blog POst
 export const createHtmlPost = async({ htmlContent, htmlObject, authorId} : { authorId: string | undefined;htmlContent: string; htmlObject: Object | undefined;}) => {
     const {data} = await BackEnd.post('/post/create', {
         htmlContent,
         htmlObject,
         authorId
+    });
+    return data;
+}
+
+
+// Upload Image file
+export const uploadImage = async ({ file }: { file : File}) => {
+    const {data} = await BackEnd.post('/asset-upload', {
+        file
     });
     return data;
 }
