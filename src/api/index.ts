@@ -25,10 +25,11 @@ export const createPost = async ({ postData  } : { postData : Post}) => {
 
 
 // Update a Post
-export const UpdatePost = async ({ postId, postData }: { postId: string | undefined, postData: Post }) => {
+export const UpdatePost = async ({ postId, htmlContent, htmlObject }: { postId: string | undefined, htmlObject: any; htmlContent: string;  }) => {
     const {data} = await BackEnd.put(`/post/update`, {
         id: postId,
-        ...postData
+        htmlContent,
+        htmlObject
     });
     return data;
 }

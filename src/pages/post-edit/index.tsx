@@ -19,7 +19,7 @@ export default function EditPost(){
             if(! data.success){
                 setLoading(false);
                 toast(`Error : ${data?.message}`);
-                // Redirect Into 404
+                // Redirect Into Home
                 navigate("/")
                 return
             }
@@ -37,7 +37,7 @@ export default function EditPost(){
             loading ? (
                 <Loader/>
             ) : (
-                <SimpleEditorComponent content={JSON.parse(post?.htmlContent||"")}/>
+                <SimpleEditorComponent content={JSON.parse(post?.htmlContent || "")} post={post}/>
             )
         }
         <ToastContainer />
