@@ -4,7 +4,13 @@ export type Post = {
     _id?:string;
     createdAt?:string;
     htmlContent?:string;
-    htmlObject?:Object
+    htmlObject?:Object,
+    author?: {
+        _id: string;
+        name: string;
+        email: string;
+        password : string;
+    };
 }
 
 

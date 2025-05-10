@@ -1,8 +1,9 @@
+import { useAuth } from "../hooks/authContext";
 import { Post } from "../types";
 import { NavLink } from "react-router";
 
 export default function PostCard({ post }: {post : Post}) {
-    console.log(post)
+    const {user} = useAuth();
   return (
    <>
     <div className="min-w-[10px] h-[200px] p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
@@ -37,6 +38,21 @@ export default function PostCard({ post }: {post : Post}) {
                     />
                     </svg>
                 </NavLink>
+                {
+                    ( (user?.id == post?.author?._id) && post?.author) && (
+                        <NavLink 
+                            to={`/post/edit/${post._id}`} 
+                            className="inline-flex items-center px-3 py-2 
+                                text-sm font-medium text-center text-white bg-blue-700 
+                                rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none 
+                                focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 
+                                dark:focus:ring-blue-800
+                            "
+                        >
+                            Edit
+                        </NavLink>
+                    )
+                }
             </div>
         </div>
     </div>

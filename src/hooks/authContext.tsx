@@ -22,11 +22,12 @@ export const AuthProvider = ({ children }: { children : any}) => {
     const [user, setUser]= useState<{ name ?: string; email ?: string; loggedIn ?: boolean; id?: string}>();
     const [loading, setLoading] = useState(true);
 
-    const updateUser = ({ name, email, loggedIn}: { name ?:string; email ?: string; loggedIn ?: boolean;}) => {
+    const updateUser = ({ name, email, loggedIn , id}: { name ?:string; email ?: string; loggedIn ?: boolean; id?: string | undefined}) => {
         setUser({
             name,
             email,
-            loggedIn
+            loggedIn,
+            id
         })
     };
 
