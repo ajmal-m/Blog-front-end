@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Button, Drawer, DrawerItems } from "flowbite-react";
+import {  Drawer, DrawerItems } from "flowbite-react";
 import { useState } from "react";
 
 export function DrawerMenu() {
