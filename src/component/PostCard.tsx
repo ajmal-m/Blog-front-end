@@ -41,7 +41,7 @@ export default function PostCard({ post }: {post : Post}) {
                 {
                     ( (user?.id == post?.author?._id) && post?.author) && (
                         <NavLink 
-                            to={`/post/edit/${post._id}`} 
+                            to={`/editor/${post._id}`} 
                             className="inline-flex items-center px-3 py-2 
                                 text-sm font-medium text-center text-white bg-blue-700 
                                 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none 

@@ -185,7 +185,7 @@ const MobileToolbarContent = ({
 export function SimpleEditor({
   viewOnly,
   editorContent
-}: { viewOnly ?: boolean ; editorContent ?: string;}) {
+}: { viewOnly ?: boolean ; editorContent ?: string | null;}) {
   const isMobile = useMobile()
   const windowSize = useWindowSize()
   const [mobileView, setMobileView] = React.useState<
