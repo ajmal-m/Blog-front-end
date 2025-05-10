@@ -24,6 +24,7 @@ function LogInForm() {
         const response = await LogInUser({ logInData : {...loginData}});
 
         if(!response?.success){
+            setLoading(false);
             toast.error(`${response.message}`);
             return
         }
@@ -35,7 +36,7 @@ function LogInForm() {
     }
   return (
     <>
-        <form onSubmit={handleLogIn} className="w-[500px] p-[16px] bg-[red] rounded bg-[#223266] dark:bg-[#223266]">
+        <form onSubmit={handleLogIn} className="w-[500px] max-sm:w-[300px] p-[16px] bg-[red] rounded bg-[#223266] dark:bg-[#223266]">
             <div className="mt-[12px]">
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Address</label>
                 <input 
