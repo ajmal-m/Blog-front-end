@@ -325,7 +325,7 @@ export function SimpleEditor({
         )
       }
 
-      <div className="content-wrapper">
+      <div className={`content-wrapper ${ viewOnly && 'pb-[24px]'}`}>
         <EditorContent
           editor={editor}
           role="presentation"
