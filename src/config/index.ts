@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const local = window.location.host.includes('localhost') ;
+const local = window.location.host.includes('localhost');
 //http://13.49.74.126:3000
 
 const instance = axios.create({
