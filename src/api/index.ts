@@ -72,3 +72,11 @@ export const uploadImage = async (formData : FormData) => {
     const {data} = await FormTypeBackend.post('/asset-upload',formData);
     return data;
 }
+
+// Delete POst
+export const deletePost = async ({ id }: { id: string | undefined}) => {
+    const {data} = await BackEnd.post("/post/delete", {
+        id
+    });
+    return data;
+}

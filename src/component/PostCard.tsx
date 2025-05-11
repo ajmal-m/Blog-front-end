@@ -1,6 +1,8 @@
 import { useAuth } from "../hooks/authContext";
 import { Post } from "../types";
 import { NavLink } from "react-router";
+import Delete from "./Delete";
+import { deletePost } from "../api";
 
 export default function PostCard({ post }: {post : Post}) {
     const {user} = useAuth();
@@ -11,7 +13,7 @@ export default function PostCard({ post }: {post : Post}) {
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-active-color h-[96px] overflow-hidden">
                 {post.title}
             </h5>
-            <div className="flex items-center gap-4 mt-[12px]">
+            <div className="flex items-center gap-1 mt-[12px]">
                 <NavLink to={`/post/${post._id}`} 
                     className='
                         inline-flex items-center px-3 py-2 
@@ -51,6 +53,11 @@ export default function PostCard({ post }: {post : Post}) {
                         >
                             Edit
                         </NavLink>
+                    )
+                }
+                {
+                    ( (user?.id == post?.author?._id) && post?.author) && (
+                       <Delete id={post._id} method={deletePost}/>
                     )
                 }
             </div>
