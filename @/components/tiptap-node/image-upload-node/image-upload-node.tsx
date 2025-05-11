@@ -3,6 +3,7 @@ import type { NodeViewProps } from "@tiptap/react"
 import { NodeViewWrapper } from "@tiptap/react"
 import { CloseIcon } from "../../tiptap-icons/close-icon"
 import "../../tiptap-node/image-upload-node/image-upload-node.scss"
+import crypto from "crypto";
 
 export interface FileItem {
   id: string
