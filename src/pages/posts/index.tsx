@@ -14,7 +14,7 @@ export default function Posts() {
     const [nextPage, setNextPage] = useState(false);
     const [limit] = useState(10);
     const {theme} = UseTheme();
-    const scrollRef = useRef(null);
+    const scrollRef = useRef<HTMLDivElement | null>(null);
 
 
     const scrollFetchDatas = async () => {
@@ -25,6 +25,7 @@ export default function Posts() {
 
     const handleScroll = () => {
         const div = scrollRef.current;
+        if(!div) return null;
         if (div.scrollTop + div.clientHeight >= div.scrollHeight ) {
             // Reached at bottom
             if(nextPage){
