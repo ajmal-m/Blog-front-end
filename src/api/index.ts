@@ -1,4 +1,4 @@
-import BackEnd from "../config";
+import BackEnd, { FormTypeBackend} from "../config";
 import { Post, User } from "../types";
 
 // Get  all Posts
@@ -68,9 +68,7 @@ export const createHtmlPost = async({ htmlContent, htmlObject, authorId} : { aut
 
 
 // Upload Image file
-export const uploadImage = async ({ file }: { file : File}) => {
-    const {data} = await BackEnd.post('/asset-upload', {
-        file
-    });
+export const uploadImage = async (formData : FormData) => {
+    const {data} = await FormTypeBackend.post('/asset-upload',formData);
     return data;
 }

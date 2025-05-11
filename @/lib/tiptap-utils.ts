@@ -1,4 +1,5 @@
 import { Editor } from "@tiptap/react"
+import { uploadImage } from "../../src/api"
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 
@@ -26,12 +27,22 @@ export const isNodeInSchema = (nodeName: string, editor: Editor | null) =>
 export const handleImageUpload = async (
   _file: File,
 ): Promise<string> => {
-  // Simulate upload progress
-  debugger
-  const file = _file;
-  const blobUrl = URL.createObjectURL(file);
+  // Create Form Data
+  const formData = new FormData();
 
-  return blobUrl;
+  formData.append("image", _file);
+  formData.append("caption", "Sample Image file");
+
+
+
+  const data = await uploadImage(formData);
+
+  console.log("data url --> " ,data?.url)
+  if(data?.success){
+    return data?.url
+  }
+
+  return data?.url
 
   // Uncomment to use actual file conversion:
   // return convertFileToBase64(file, abortSignal)
