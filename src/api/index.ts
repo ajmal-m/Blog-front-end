@@ -2,8 +2,8 @@ import BackEnd, { FormTypeBackend} from "../config";
 import { Post, User } from "../types";
 
 // Get  all Posts
-export const getPosts = async() => {
-    const {data} = await BackEnd.get('/post/posts');
+export const getPosts = async({ page , limit} : { page : number; limit : number;}) => {
+    const {data} = await BackEnd.get(`/post/posts?page=${page}&limit=${limit}` );
     return data;
 };
 
