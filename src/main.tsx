@@ -12,6 +12,7 @@ const EditorLayout = lazy(() => import("./layouts/EditorLayout.tsx"));
 
 const Posts = lazy(() => import("./pages/posts/index.tsx"));
 const PostDetail = lazy(() => import("./pages/post-detail/index.tsx"));
+const EditPost = lazy(() => import("./pages/post-edit/index.tsx"));
 const PostCreate = lazy(() => import("./pages/post-create/index.tsx"));
 const Login = lazy(() => import("./pages/log-in/index.tsx"));
 const SignUp = lazy(() => import("./pages/sign-up/index.tsx"));
@@ -50,6 +51,11 @@ createRoot(document.getElementById('root')!).render(
             <Route path='/editor/new' element={
               <Suspense  fallback={<LayoutLoader/>}>
                 <PostCreate/>
+              </Suspense>
+            }/>
+            <Route path='/editor/:postId' element={
+              <Suspense  fallback={<LayoutLoader/>}>
+                <EditPost/>
               </Suspense>
             }/>
           </Route>

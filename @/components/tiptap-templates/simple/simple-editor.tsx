@@ -74,15 +74,18 @@ import { handleImageUpload, MAX_FILE_SIZE } from "../../../lib/tiptap-utils"
 import "../../tiptap-templates/simple/simple-editor.scss"
 
 import content from "../../tiptap-templates/simple/data/content.json"
+import { Post } from "../../../../src/types"
 
 const MainToolbarContent = ({
   onHighlighterClick,
   onLinkClick,
   isMobile,
+  post
 }: {
   onHighlighterClick: () => void
   onLinkClick: () => void
   isMobile: boolean
+  post?:Post
 }) => {
   return (
     <>
@@ -145,7 +148,7 @@ const MainToolbarContent = ({
       {isMobile && <ToolbarSeparator />}
 
       <ToolbarGroup>
-        <Preview />
+        <Preview post={post} />
       </ToolbarGroup>
 
       <ToolbarSeparator />
@@ -184,8 +187,9 @@ const MobileToolbarContent = ({
 
 export function SimpleEditor({
   viewOnly,
-  editorContent
-}: { viewOnly ?: boolean ; editorContent ?: string;}) {
+  editorContent,
+  post
+}: { viewOnly ?: boolean ; editorContent ?: string | null; post ?: Post}) {
   const isMobile = useMobile()
   const windowSize = useWindowSize()
   const [mobileView, setMobileView] = React.useState<
@@ -314,6 +318,7 @@ export function SimpleEditor({
                 onHighlighterClick={() => setMobileView("highlighter")}
                 onLinkClick={() => setMobileView("link")}
                 isMobile={isMobile}
+                post={post}
               />
             ) : (
               <MobileToolbarContent
@@ -325,7 +330,7 @@ export function SimpleEditor({
         )
       }
 
-      <div className="content-wrapper">
+      <div className={`content-wrapper ${ viewOnly && 'pb-[50px]'}`}>
         <EditorContent
           editor={editor}
           role="presentation"

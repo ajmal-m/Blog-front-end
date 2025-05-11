@@ -14,6 +14,8 @@ function SignUpForm() {
         confirmPassword:''
     });
 
+    const [loading, setLoading] = useState<boolean>(false);
+
 
     const navigate = useNavigate();
 
@@ -21,6 +23,7 @@ function SignUpForm() {
     const {updateUser} = useAuth();
 
     const handleSubmit = async (e : React.FormEvent) => {
+        setLoading(true);
         e.preventDefault();
         if(userData.password !== userData.confirmPassword){
             toast.warning("Passowrd is not match");
@@ -28,6 +31,7 @@ function SignUpForm() {
         }
         const response = await CreateUser({ userData });
         if(!response?.success){
+            setLoading(false);
             toast.error(`${response.message}`);
             return
         }
@@ -38,11 +42,12 @@ function SignUpForm() {
             loggedIn:true,
             id: response?.user?.id
         });
+        setLoading(false);
         navigate("/");
     }
     return (
         <>
-            <form onSubmit={handleSubmit} className="w-[500px] p-[16px] bg-[red] rounded bg-[#223266] dark:bg-[#223266]" >
+            <form onSubmit={handleSubmit} className="w-[500px] max-sm:w-[300px] p-[16px] bg-[red] rounded bg-[#223266] dark:bg-[#223266]" >
                 <div>
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full Name</label>
                     <input type="text" name="name" id="name"  className=" block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border 
@@ -97,7 +102,9 @@ function SignUpForm() {
                         mt-6 w-full
                     "
                 >
-                    Create Account
+                    {
+                        loading ? "Creating...." : "Create Account"
+                    }
                 </button>
             </form>
 

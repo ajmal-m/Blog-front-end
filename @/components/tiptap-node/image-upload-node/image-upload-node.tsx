@@ -41,7 +41,7 @@ function useFileUpload(options: UploadOptions) {
     const abortController = new AbortController()
 
     const newFileItem: FileItem = {
-      id: crypto.randomUUID(),
+      id: (Math.random()*999).toString(),
       file,
       progress: 0,
       status: "uploading",

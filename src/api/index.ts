@@ -1,4 +1,4 @@
-import BackEnd from "../config";
+import BackEnd, { FormTypeBackend} from "../config";
 import { Post, User } from "../types";
 
 // Get  all Posts
@@ -25,10 +25,11 @@ export const createPost = async ({ postData  } : { postData : Post}) => {
 
 
 // Update a Post
-export const UpdatePost = async ({ postId, postData }: { postId: string | undefined, postData: Post }) => {
+export const UpdatePost = async ({ postId, htmlContent, htmlObject }: { postId: string | undefined, htmlObject: any; htmlContent: string;  }) => {
     const {data} = await BackEnd.put(`/post/update`, {
         id: postId,
-        ...postData
+        htmlContent,
+        htmlObject
     });
     return data;
 }
@@ -55,11 +56,27 @@ export const LogInUser = async ({ logInData} : { logInData : {  email: string; p
 }
 
 
+// Create Blog POst
 export const createHtmlPost = async({ htmlContent, htmlObject, authorId} : { authorId: string | undefined;htmlContent: string; htmlObject: Object | undefined;}) => {
     const {data} = await BackEnd.post('/post/create', {
         htmlContent,
         htmlObject,
         authorId
+    });
+    return data;
+}
+
+
+// Upload Image file
+export const uploadImage = async (formData : FormData) => {
+    const {data} = await FormTypeBackend.post('/asset-upload',formData);
+    return data;
+}
+
+// Delete POst
+export const deletePost = async ({ id }: { id: string | undefined}) => {
+    const {data} = await BackEnd.post("/post/delete", {
+        id
     });
     return data;
 }
