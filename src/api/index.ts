@@ -80,3 +80,15 @@ export const deletePost = async ({ id }: { id: string | undefined}) => {
     });
     return data;
 }
+
+// Post Like Update
+export const postLikeUpdate = async ({
+    postId,userId, likeStatus
+}: { postId: string | undefined; userId: string | undefined; likeStatus: 'like' | 'unlike'}) => {
+    const {data} = await BackEnd.put("/post/update-like", {
+        postId,
+        userId,
+        likeStatus
+    });
+    return data;
+}

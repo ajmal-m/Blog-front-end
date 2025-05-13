@@ -15,7 +15,8 @@ export type Post = {
         src?: string;
         alt?: string;
     },
-    likeCount?: number
+    likeCount?: number,
+    hasLiked?: boolean | undefined,
 }
 
 

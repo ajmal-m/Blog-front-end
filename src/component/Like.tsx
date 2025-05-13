@@ -1,36 +1,43 @@
 import { formatNumberShort } from "../lib/utils";
 import {memo, useEffect, useRef, useState} from 'react';
 import '../styles/Like.css';
+import { postLikeUpdate } from "../api";
+import { useAuth } from "../hooks/authContext";
 
 const Like = memo(
-    ({ filled, color = 'blue', likeCount = 0 }: {
-    filled: boolean;
+    ({ liked, color = 'blue', likeCount = 0, postId }: {
+    liked: true | false;
     color ?: string;
     likeCount ?: number;
+    postId: string | undefined;
 }) => {
 
     const [likeStatus, setLikeStatus] = useState<boolean>(false);
     const [currentLIkeCount, setCurrentLikeCount] = useState<number>(0);
     const iconRef = useRef<SVGSVGElement|null>(null);
     const debounceTimer = useRef<NodeJS.Timeout|null>(null);
+    const {user} = useAuth();
 
     const updateLike = () => {
         const iconItem = iconRef.current;
         if(!iconItem) return null;
         iconItem.classList.toggle('scale-clicked');
         setLikeStatus((status) => ! status);
-        setCurrentLikeCount((c : number) => ( likeStatus ? likeCount : c+1));
+        setCurrentLikeCount((c : number) => ( likeStatus ? Math.max(c-1, 0) : c+1));
         // API calling....
 
         if(debounceTimer.current) clearTimeout(debounceTimer.current);
-        debounceTimer.current = setTimeout(() => {
-            console.log(likeStatus);
-            debugger
+        debounceTimer.current = setTimeout(async () => {
+            await postLikeUpdate({
+                postId: postId,
+                userId : user?.id,
+                likeStatus : !likeStatus ?  'like' : 'unlike'
+            })
         }, 500);
     };
 
     useEffect(() => {
-        setLikeStatus(filled);
+        setLikeStatus(liked);
         setCurrentLikeCount(likeCount);
     }, []);
     return (
