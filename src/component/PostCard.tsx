@@ -63,7 +63,7 @@ export default function PostCard({ post }: {post : Post}) {
                 }
                 {
                     (user?.id !== post?.author?._id) && (
-                        <Like filled={false} color="green" likeCount={12345}/>
+                        <Like filled={false} color="blue" likeCount={post?.likeCount||0}/>
                     )
                 }
             </div>

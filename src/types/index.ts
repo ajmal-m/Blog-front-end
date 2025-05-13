@@ -14,7 +14,8 @@ export type Post = {
     thumbnail?:{
         src?: string;
         alt?: string;
-    }
+    },
+    likeCount?: number
 }
 
 
