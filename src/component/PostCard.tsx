@@ -3,6 +3,7 @@ import { Post } from "../types";
 import { NavLink } from "react-router";
 import Delete from "./Delete";
 import { deletePost } from "../api";
+import Like from "./Like";
 
 export default function PostCard({ post }: {post : Post}) {
     const {user} = useAuth();
@@ -58,6 +59,11 @@ export default function PostCard({ post }: {post : Post}) {
                 {
                     ( (user?.id == post?.author?._id) && post?.author) && (
                        <Delete id={post._id} method={deletePost}/>
+                    )
+                }
+                {
+                    (user?.id !== post?.author?._id) && (
+                        <Like filled={false} color="green" likeCount={12345}/>
                     )
                 }
             </div>
