@@ -5,11 +5,13 @@ import { getPostById} from '../../api/index';
 import {ToastContainer, toast} from 'react-toastify';
 import { Post } from "../../types";
 import Loader from "../../component/Loader";
+import { useAuth } from "../../hooks/authContext";
 
 export default function EditPost(){
     const {postId } = useParams();
     const [loading, setLoading] = useState(true);
     const [post, setPost] = useState<Post>();
+    const {user} = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,6 +23,11 @@ export default function EditPost(){
                 toast(`Error : ${data?.message}`);
                 // Redirect Into Home
                 navigate("/")
+                return
+            }
+            // Check owner of post is same authenticated user
+            if(data?.post?.author?._id !== user?.id){
+                navigate("/");
                 return
             }
             setPost(data.post);
