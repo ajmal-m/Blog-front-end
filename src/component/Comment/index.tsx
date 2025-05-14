@@ -24,7 +24,7 @@ export default function Comment(){
             show={openModal} 
             onClose={() => setOpenModal(false)} 
           >
-            <div className="min-h-[80vh] w-full bg-[#1e2939] rounded-[8px] p-[16px]">
+            <div className="min-h-[90vh] w-full bg-[#1e2939] rounded-[8px] p-[16px]">
 
               {/* Title and close */}
               <div className="flex items-center justify-between border-b border-gray-700 pb-[16px]">
