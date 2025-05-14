@@ -1,5 +1,5 @@
 import { Modal} from "flowbite-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import CommentBox from "./comment-box";
 import Close from "./close";
 import CommentInput from "./input-box";
