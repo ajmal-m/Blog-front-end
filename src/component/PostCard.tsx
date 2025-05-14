@@ -1,76 +1,33 @@
-import { useAuth } from "../hooks/authContext";
 import { Post } from "../types";
-import { NavLink } from "react-router";
-import Delete from "./Delete";
-import { deletePost } from "../api";
 import Like from "./Like";
+import Comment from "./Comment";
+import PostCardDropDown from "./Dropdown/PostCard";
+import ReadMore from "./ReadMore";
 
 export default function PostCard({ post }: {post : Post}) {
-    const {user} = useAuth();
   return (
    <>
-    <div className="min-w-[10px] h-[200px] p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-        <div className="flex flex-col">
+    <div className="min-w-[10px] h-[200px] p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <div className="flex flex-col relative">
+            <div className="flex items-center justify-end">
+                <PostCardDropDown postId={post._id}/>
+            </div>
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-active-color h-[96px] overflow-hidden">
                 {post.title}
             </h5>
-            <div className="flex items-center gap-1 mt-[12px]">
-                <NavLink to={`/post/${post._id}`} 
-                    className='
-                        inline-flex items-center px-3 py-2 
-                        text-sm font-medium text-center text-white bg-blue-700 
-                        rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none 
-                        focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 
-                        dark:focus:ring-blue-800
-                    '
-                >
-                    Read more
-                    <svg
-                    className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 10"
-                    >
-                    <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M1 5h12m0 0L9 1m4 4L9 9"
+            <div className="flex items-center gap-1 mt-[12px] justify-between">
+                <div className="flex items-center gap-[6px]">
+                    <Like 
+                        liked={post?.hasLiked ? true : false} 
+                        color="blue" 
+                        likeCount={post?.likeCount||0}
+                        postId={post._id}
                     />
-                    </svg>
-                </NavLink>
-                {
-                    ( (user?.id == post?.author?._id) && post?.author) && (
-                        <NavLink 
-                            to={`/editor/${post._id}`} 
-                            className="inline-flex items-center px-3 py-2 
-                                text-sm font-medium text-center text-white bg-blue-700 
-                                rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none 
-                                focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 
-                                dark:focus:ring-blue-800
-                            "
-                        >
-                            Edit
-                        </NavLink>
-                    )
-                }
-                {
-                    ( (user?.id == post?.author?._id) && post?.author) && (
-                       <Delete id={post._id} method={deletePost}/>
-                    )
-                }
-                {
-                    (user?.id !== post?.author?._id) && (
-                        <Like 
-                            liked={post?.hasLiked ? true : false} 
-                            color="blue" 
-                            likeCount={post?.likeCount||0}
-                            postId={post._id}
-                        />
-                    )
-                }
+                    <Comment/>
+                </div>
+                <div>
+                   <ReadMore postId={post._id}/>
+                </div>
             </div>
         </div>
     </div>
