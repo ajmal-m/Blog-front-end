@@ -3,7 +3,7 @@ import { useState } from "react";
 import CommentBox from "./comment-box";
 import Close from "./close";
 import CommentInput from "./input-box";
-import Loader from "../Comment/loader";
+// import Loader from "../Comment/loader";
 
 export default function Comment(){
     const [openModal, setOpenModal] = useState(false);
@@ -34,14 +34,14 @@ export default function Comment(){
 
               {/* Comment section */}
               <div className="h-[70vh] overflow-y-auto">
-                {/* {
+                {
                   [...new Array(3).fill(0).map((_) => (
                     <CommentBox 
                       text="HI How are you?"
                     />
                   ))]
-                } */}
-                <Loader/>
+                }
+                {/* <Loader/> */}
               </div>
 
               {/* Text Input update */}
