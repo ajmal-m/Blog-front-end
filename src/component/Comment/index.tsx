@@ -35,7 +35,7 @@ export default function Comment(){
               {/* Comment section */}
               <div className="h-[70vh] overflow-y-auto">
                 {
-                  [...new Array(3).fill(0).map((_) => (
+                  [...new Array(20).fill(0).map((_) => (
                     <CommentBox 
                       text="HI How are you?"
                     />
