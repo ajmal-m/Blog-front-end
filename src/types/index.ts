@@ -17,6 +17,7 @@ export type Post = {
     },
     likeCount?: number,
     hasLiked?: boolean | undefined,
+    comments?:object[]
 }
 
 
@@ -25,4 +26,8 @@ export type User = {
     email: string;
     password: string;
     confirmPassword ?: string;
+}
+
+export type CommentType = {
+    text : string;
 }

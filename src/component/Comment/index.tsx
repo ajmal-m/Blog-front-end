@@ -1,12 +1,32 @@
 import { Modal} from "flowbite-react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CommentBox from "./comment-box";
 import Close from "./close";
 import CommentInput from "./input-box";
-// import Loader from "../Comment/loader";
+import Loader from "../Comment/loader";
+import { getPostComments } from "../../api";
+import { memo } from "react";
+import { CommentType } from "../../types";
+import Empty from "./empty";
+import { formatNumberShort } from "../../lib/utils";
 
-export default function Comment(){
+const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) => {
     const [openModal, setOpenModal] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [comments, setComments] = useState([]);
+
+
+    const getComments = useCallback(async () => {
+      const data = await getPostComments({postId});
+      setComments(data?.comments);
+      setLoading(false);
+    }, [ comments,loading]);
+
+
+    const openCommentModal = useCallback(() => {
+      setOpenModal(true);
+      getComments();
+    }, [comments, loading]);
 
     return(
         <>
@@ -15,11 +35,12 @@ export default function Comment(){
               fill="blue" stroke="white" stroke-width="2" 
               stroke-linecap="round" stroke-linejoin="round" 
               className="lucide lucide-message-square-text-icon lucide-message-square-text cursor-pointer"
-              onClick={() => setOpenModal(true)}
+              onClick={openCommentModal}
           >
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               <path d="M13 8H7"/><path d="M17 12H7"/>
           </svg>
+          <p className="font-bold text-white">{formatNumberShort(count)}</p>
           <Modal 
             show={openModal} 
             onClose={() => setOpenModal(false)} 
@@ -35,21 +56,29 @@ export default function Comment(){
               {/* Comment section */}
               <div className="h-[60vh] overflow-y-auto">
                 {
-                  [...new Array(20).fill(0).map((_) => (
+                  loading  ? (<Loader/>) : (comments.length ? comments.map((comment : CommentType) => (
                     <CommentBox 
-                      text="HI How are you?"
+                      text={comment.text}
                     />
-                  ))]
+                  )):(
+                   <Empty
+                      text="No comments yet."
+                   />
+                  ))
                 }
-                {/* <Loader/> */}
               </div>
 
               {/* Text Input update */}
               <div>
-                <CommentInput/>
+                <CommentInput
+                  postId={postId}
+                  getComments={getComments}
+                />
               </div>
             </div>
           </Modal>
         </>
     )
-}
+});
+
+export default Comment;

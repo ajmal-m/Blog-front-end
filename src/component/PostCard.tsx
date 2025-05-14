@@ -30,10 +30,10 @@ export default function PostCard({ post }: {post : Post}) {
                                 likeCount={post?.likeCount||0}
                                 postId={post._id}
                             />
-                            <Comment/>
+                            <Comment postId={post?._id ||''} count={post.comments?.length||0}/>
                         </div>
                         <div>
-                        <ReadMore postId={post._id}/>
+                        <ReadMore postId={post?._id}/>
                         </div>
                     </div>
                 </div>
