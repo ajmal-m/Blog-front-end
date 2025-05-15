@@ -59,13 +59,22 @@ export default function Posts() {
                         <Loader/>
                     ) : (
                         posts.length ? (
-                            <div className="grid-post-container">
-                                {  
-                                    posts.map((item: Post) => (
-                                        <PostCard post={item} key={item._id}/>
-                                    ))
+                            <>
+                                <div className="grid-post-container">
+                                    {  
+                                        posts.map((item: Post) => (
+                                            <PostCard post={item} key={item._id}/>
+                                        ))
+                                    }
+                                </div>
+                                {
+                                    nextPage && (
+                                        <div className="flex items-center justify-center text-white animate-bounce">
+                                            Loading...
+                                        </div>
+                                    )
                                 }
-                            </div>
+                            </>
                         ) : (
                             <div className={`h-screen w-screen flex items-center justify-center ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
                                 Empty 
