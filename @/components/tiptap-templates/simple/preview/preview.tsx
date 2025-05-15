@@ -2,16 +2,17 @@
 import {Button} from '../../../tiptap-ui-primitive/button';
 import { useTiptapEditor } from "../../../../hooks/use-tiptap-editor";
 import {createHtmlPost, UpdatePost} from '../../../../../src/api/index'
-import { useAuth } from '../../../../../src/hooks/authContext';
 import { useNavigate } from 'react-router';
 import { Post } from '../../../../../src/types';
+import { useSelector } from 'react-redux';
+import { RootStore } from '../../../../../src/store';
 
 export default function Preview({
   post
 }: { post : Post | undefined}) {
 
     const editor = useTiptapEditor();
-    const {user} = useAuth();
+    const user = useSelector((state: RootStore) =>state.user);
     const navigate = useNavigate();
     const getHTMLcontent = () => {
         console.log(editor?.getHTML());

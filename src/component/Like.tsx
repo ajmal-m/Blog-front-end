@@ -2,7 +2,8 @@ import { formatNumberShort } from "../lib/utils";
 import {memo, useEffect, useRef, useState} from 'react';
 import '../styles/Like.css';
 import { postLikeUpdate } from "../api";
-import { useAuth } from "../hooks/authContext";
+import { useSelector } from "react-redux";
+import { RootStore } from "../store";
 
 const Like = memo(
     ({ liked, color = 'blue', likeCount = 0, postId }: {
@@ -16,7 +17,7 @@ const Like = memo(
     const [currentLIkeCount, setCurrentLikeCount] = useState<number>(0);
     const iconRef = useRef<SVGSVGElement|null>(null);
     const debounceTimer = useRef<NodeJS.Timeout|null>(null);
-    const {user} = useAuth();
+    const user = useSelector((state: RootStore) => state.user);
 
     const updateLike = () => {
         const iconItem = iconRef.current;
@@ -31,7 +32,7 @@ const Like = memo(
             await postLikeUpdate({
                 postId: postId,
                 userId : user?.id,
-                likeStatus : !likeStatus ?  'like' : 'unlike'
+                likeStatus : !likeStatus ?  'like' : 'unlike',
             })
         }, 500);
     };

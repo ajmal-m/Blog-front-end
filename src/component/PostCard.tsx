@@ -3,11 +3,12 @@ import Like from "./Like";
 import Comment from "./Comment";
 import PostCardDropDown from "./Dropdown/PostCard";
 import ReadMore from "./ReadMore";
-import { useAuth } from "../hooks/authContext";
+import { useSelector } from "react-redux";
+import { RootStore } from "../store";
 
 export default function PostCard({ post }: {post : Post}) {
 
-    const {user} = useAuth();
+    const user = useSelector((state: RootStore) => state.user);
     return (
         <>
             <div className="min-w-[10px] h-[200px] p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
