@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../store/userSlice";
 import { AppDispatch } from "../../store";
+import { clearPosts } from "../../store/postSlice";
 
 function LogInForm() {
 
@@ -39,6 +40,7 @@ function LogInForm() {
                 id: response?.user?.id
             })
         );
+        dispatch(clearPosts());
         setLoading(false);
         navigate("/");
     }
