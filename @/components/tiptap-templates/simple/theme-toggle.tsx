@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 
 // --- UI Primitives ---
 import { Button } from "../../tiptap-ui-primitive/button"
