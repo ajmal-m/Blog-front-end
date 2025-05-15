@@ -1,9 +1,13 @@
 import { memo, useCallback, useState } from "react";
 import { createPostComment } from "../../api";
 import { toast, ToastContainer} from 'react-toastify';
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { clearComments } from "../../store/commentSlice";
 
-const CommentInput = memo(({ postId, getComments }: { postId : string;getComments: () => void}) => {
+const CommentInput = memo(({ postId, getComments }: { postId : string;getComments: ({ page} : { page : number;}) => void}) => {
     const [text, setText] = useState<string>("");
+    const dispatch = useDispatch<AppDispatch>();
 
     const addComment = useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
@@ -14,7 +18,8 @@ const CommentInput = memo(({ postId, getComments }: { postId : string;getComment
             return
         }
         setText("");
-        getComments();
+        dispatch(clearComments());
+        getComments({ page: 1});
     }, [text])
     return(
         <>

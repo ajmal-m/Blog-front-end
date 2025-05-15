@@ -94,8 +94,8 @@ export const postLikeUpdate = async ({
 }
 
 // get Post comments
-export const getPostComments = async ({postId}: { postId: string}) => {
-    const {data} = await BackEnd.get(`/post/comment/${postId}`);
+export const getPostComments = async ({postId , page, limit }: { postId: string, page:number; limit:number }) => {
+    const {data} = await BackEnd.get(`/post/comment/${postId}?page=${page}&limit=${limit}`);
     return data;
 }
 
