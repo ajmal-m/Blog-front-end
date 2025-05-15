@@ -35,7 +35,7 @@ export default function PostCard({ post }: {post : Post}) {
                         <div className="flex items-center gap-[6px]">
                             <Like 
                                 liked={post?.hasLiked ? true : false} 
-                                color="blue" 
+                                color="#8ec5ff" 
                                 likeCount={post?.likeCount||0}
                                 postId={post._id}
                             />

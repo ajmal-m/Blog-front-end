@@ -22,6 +22,7 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
     console.log("Page -> ", currentPage)
 
     const getComments = useCallback(async ({ page }: { page : number;}) => {
+      setLoading(true);
       const data = await getPostComments({postId, page: page, limit});
       dispatch(updateComments({ comments: data?.comments}));
       dispatch(updateNextPage({ nextPage: data?.nextPage}));
@@ -56,7 +57,7 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
     return(
         <>
           <svg xmlns="http://www.w3.org/2000/svg" 
-              width="24" height="24" viewBox="0 0 24 24" 
+              width="16" height="16" viewBox="0 0 24 24" 
               fill="blue" stroke="white" stroke-width="2" 
               stroke-linecap="round" stroke-linejoin="round" 
               className="lucide lucide-message-square-text-icon lucide-message-square-text cursor-pointer"
@@ -85,9 +86,9 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
                     comments.length ? (
                       <>
                         {
-                          comments.map((comment : any) => (
+                          comments.map((comment:any) => (
                              <CommentBox 
-                                text={comment.text}
+                                comment={comment}
                               />
                           ))
                         }
