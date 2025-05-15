@@ -5,6 +5,7 @@ import PostCardDropDown from "./Dropdown/PostCard";
 import ReadMore from "./ReadMore";
 import { useSelector } from "react-redux";
 import { RootStore } from "../store";
+import { getTimeToNow } from "../lib/utils";
 
 export default function PostCard({ post }: {post : Post}) {
 
@@ -13,7 +14,14 @@ export default function PostCard({ post }: {post : Post}) {
         <>
             <div className="min-w-[10px] h-[200px] p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                 <div className="flex flex-col relative">
-                    <div className="flex items-center justify-end min-h-[24px]">
+                    <div className="flex items-center justify-between min-h-[24px]">
+                        <div>
+                            <p className="text-[12px] font-[500] text-[#8891ff]">
+                                {
+                                   post?.creadtedAt ? getTimeToNow(post.creadtedAt) : post.createdAt ? getTimeToNow(post.createdAt) : "" 
+                                }
+                            </p>
+                        </div>
                         {
                             (post.author?._id === user?.id ) && (
                                 <PostCardDropDown postId={post._id}/>

@@ -17,7 +17,8 @@ export type Post = {
     },
     likeCount?: number,
     hasLiked?: boolean | undefined,
-    comments?:object[]
+    comments?:object[],
+    creadtedAt?:string;
 }
 
 
