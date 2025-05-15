@@ -3,21 +3,24 @@
 
 import {  Drawer, DrawerItems } from "flowbite-react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router";
-import { useAuth } from "../hooks/authContext";
-import { UseTheme } from "../hooks/themeContext";
+import { logOutUser } from "../store/userSlice";
+import { toggleTheme } from "../store/themeSlice";
+import { RootStore } from "../store";
 
 export function DrawerMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { user, logOut} = useAuth();
-  const {theme, updateTheme}= UseTheme();
+  const dispatch = useDispatch();
+  const user = useSelector((state : RootStore) => state.user);
+  const theme = useSelector((state : RootStore) => state.theme.theme);
 
   const handleClose = () => setIsOpen(false);
 
   const handleLogout = () => {
-     setIsOpen(false)
-    logOut();
+    setIsOpen(false)
+    dispatch(logOutUser());
     navigate('/auth/login');
   }
 
@@ -36,7 +39,7 @@ export function DrawerMenu() {
               </button>
                {
             !location.pathname.includes("/post/") && (
-                <button onClick={ () =>{ updateTheme( theme === 'dark' ? 'light' : 'dark' ); setIsOpen(false); }} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button onClick={ () =>{ dispatch(toggleTheme()); setIsOpen(false); }} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   { theme === 'dark' ? 'Light' : 'Dark'}
                 </button>
             )

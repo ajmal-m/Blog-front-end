@@ -3,8 +3,9 @@ import { getPosts } from "../../api";
 import Loader from "../../component/Loader";
 import { Post } from "../../types";
 import PostCard from "../../component/PostCard";
-import { UseTheme } from "../../hooks/themeContext";
-import './index.css'
+import './index.css';
+import {useSelector} from 'react-redux';
+import { RootStore } from "../../store";
 
 export default function Posts() {
 
@@ -13,8 +14,9 @@ export default function Posts() {
     const [page, setPage] = useState(1);
     const [nextPage, setNextPage] = useState(false);
     const [limit] = useState(10);
-    const {theme} = UseTheme();
     const scrollRef = useRef<HTMLDivElement | null>(null);
+
+    const theme = useSelector((state : RootStore) => state.theme.theme)
 
 
     const scrollFetchDatas = async () => {

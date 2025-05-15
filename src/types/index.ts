@@ -31,3 +31,10 @@ export type User = {
 export type CommentType = {
     text : string;
 }
+
+export type UserState = {
+    name: string;
+    email: string;
+    loggedIn: boolean;
+    id: string;
+}

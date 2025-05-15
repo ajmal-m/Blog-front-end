@@ -1,14 +1,15 @@
 import { Outlet, useNavigate } from "react-router";
 import Navbar from "../component/Navbar";
-import { useAuth } from "../hooks/authContext";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootStore } from "../store";
 
 
 export default function MainLayout() {
-  const { user} = useAuth();
   const navigate = useNavigate();
+  const user = useSelector((state : RootStore) => state.user);
 
-  console.log("Main Layout");
+  console.log("Main Layout", user);
 
 
   useEffect(() => {

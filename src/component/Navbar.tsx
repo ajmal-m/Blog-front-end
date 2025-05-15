@@ -1,17 +1,22 @@
 import { NavLink, useLocation, useNavigate } from "react-router";
-import { useAuth } from "../hooks/authContext";
-import { UseTheme } from "../hooks/themeContext";
 import { DrawerMenu } from "./Drawer";
 import {ThemeToggle} from '../../@/components/tiptap-templates/simple/theme-toggle'
 
+import {useSelector, useDispatch} from 'react-redux';
+import { toggleTheme } from "../store/themeSlice";
+import { logOutUser } from "../store/userSlice";
+import { RootStore } from "../store";
+
 const Navbar = () => {
-  const {user, logOut} = useAuth();
   const navigate = useNavigate();
-  const {theme, updateTheme} = UseTheme();
   const location = useLocation();
+  const dispatch = useDispatch();
+  
+  const theme = useSelector((state : RootStore) => state.theme.theme);
+  const user = useSelector((state : RootStore) => (state.user));
 
   const handleLogout = () => {
-    logOut();
+    dispatch(logOutUser());
     navigate('/auth/login');
   }
 
@@ -57,7 +62,7 @@ const Navbar = () => {
            {
             !location.pathname.includes("/post/") && (
               <li>
-                <button onClick={ () => updateTheme( theme === 'dark' ? 'light' : 'dark' )} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button onClick={ () => dispatch(toggleTheme())} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   { theme === 'dark' ? 'Light' : 'Dark'}
                 </button>
               </li>

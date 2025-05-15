@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { toast, ToastContainer} from 'react-toastify';
 import { LogInUser } from "../../api";
-import { useAuth } from "../../hooks/authContext";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../store/userSlice";
+import { AppDispatch } from "../../store";
 
 function LogInForm() {
 
@@ -15,8 +17,7 @@ function LogInForm() {
 
     const navigate = useNavigate();
 
-    const {updateUser} = useAuth();
-
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleLogIn = async (e : React.FormEvent) => {
         setLoading(true);
@@ -30,7 +31,14 @@ function LogInForm() {
         }
 
         localStorage.setItem("token", response.token);
-        updateUser({name: response?.user?.name, email: response?.user?.email, loggedIn: true , id: response?.user?.id});
+        dispatch(
+            updateUser({
+                name: response?.user?.name, 
+                email: response?.user?.email, 
+                loggedIn: true , 
+                id: response?.user?.id
+            })
+        );
         setLoading(false);
         navigate("/");
     }
