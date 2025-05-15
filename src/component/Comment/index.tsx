@@ -6,24 +6,29 @@ import CommentInput from "./input-box";
 import Loader from "../Comment/loader";
 import { getPostComments } from "../../api";
 import { memo } from "react";
-import { CommentType } from "../../types";
 import Empty from "./empty";
 import { formatNumberShort } from "../../lib/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootStore } from "../../store";
+import { clearComments, updateComments } from "../../store/commentSlice";
 
 const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) => {
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [comments, setComments] = useState([]);
+    const dispatch = useDispatch<AppDispatch>();
+    const comments = useSelector((state: RootStore) => state.comment.comments);
 
 
     const getComments = useCallback(async () => {
       const data = await getPostComments({postId});
-      setComments(data?.comments);
+      dispatch(updateComments({ comments: data?.comments}));
       setLoading(false);
     }, [ comments,loading]);
 
 
     const openCommentModal = useCallback(() => {
+      dispatch(clearComments());
+      setLoading(true);
       setOpenModal(true);
       getComments();
     }, [comments, loading]);
@@ -56,7 +61,7 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
               {/* Comment section */}
               <div className="h-[60vh] overflow-y-auto">
                 {
-                  loading  ? (<Loader/>) : (comments.length ? comments.map((comment : CommentType) => (
+                  loading  ? (<Loader/>) : (comments.length ? comments.map((comment : any) => (
                     <CommentBox 
                       text={comment.text}
                     />
