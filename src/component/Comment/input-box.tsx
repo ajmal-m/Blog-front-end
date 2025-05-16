@@ -1,13 +1,14 @@
 import { memo, useCallback, useState } from "react";
 import { createPostComment } from "../../api";
 import { toast, ToastContainer} from 'react-toastify';
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
-import { clearComments } from "../../store/commentSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootStore } from "../../store";
+import { clearComments, fetchPostCOmments } from "../../store/commentSlice";
 
-const CommentInput = memo(({ postId, getComments }: { postId : string;getComments: ({ page} : { page : number;}) => void}) => {
+const CommentInput = memo(({ postId }: { postId : string;}) => {
     const [text, setText] = useState<string>("");
     const dispatch = useDispatch<AppDispatch>();
+    const {limit} = useSelector((state: RootStore) => state.comment);
 
     const addComment = useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,7 +20,7 @@ const CommentInput = memo(({ postId, getComments }: { postId : string;getComment
         }
         setText("");
         dispatch(clearComments());
-        getComments({ page: 1});
+        dispatch(fetchPostCOmments({ page:1, limit, postId}))
     }, [text])
     return(
         <>

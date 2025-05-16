@@ -4,53 +4,36 @@ import CommentBox from "./comment-box";
 import Close from "./close";
 import CommentInput from "./input-box";
 import Loader from "../Comment/loader";
-import { getPostComments } from "../../api";
 import { memo } from "react";
 import Empty from "./empty";
 import { formatNumberShort } from "../../lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootStore } from "../../store";
-import { clearComments, incrementPage, updateComments, updateNextPage } from "../../store/commentSlice";
+import {  fetchPostCOmments, incrementPage } from "../../store/commentSlice";
 
 const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) => {
     const [openModal, setOpenModal] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [loadMoreLoader, setLoadMoreLoader] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
-    const { comments, currentPage, limit, nextPage} = useSelector((state: RootStore) => state.comment);
-    
+    const { comments, currentPage, limit, nextPage, loading , showMoreLoader} = useSelector((state: RootStore) => state.comment);
 
-    const getComments = useCallback(async ({ page }: { page : number;}) => {
-      setLoading(true);
-      const data = await getPostComments({postId, page: page, limit});
-      dispatch(updateComments({ comments: data?.comments}));
-      dispatch(updateNextPage({ nextPage: data?.nextPage}));
-      setLoading(false);
-    }, [ comments,currentPage, limit, postId]);
-
+    console.log("comment render")
 
     const openCommentModal = useCallback(() => {
-      dispatch(clearComments());
-      setLoading(true);
       setOpenModal(true);
-      getComments({ page: currentPage});
-    }, [comments, loading, openModal, currentPage]);
+      dispatch(fetchPostCOmments({ page: currentPage, limit, postId}))
+    }, [ postId, limit, currentPage]);
 
 
     const loadMoreComments = useCallback(async () => {
-      setLoadMoreLoader(true);
-      let newPage = currentPage + 1;
-      dispatch(incrementPage());
-      const data = await getPostComments({postId, page: newPage, limit});
-      dispatch(updateComments({ comments: data?.comments}));
-      dispatch(updateNextPage({ nextPage: data?.nextPage}));
-      setLoadMoreLoader(false);
-    }, [ comments, nextPage, currentPage, limit, postId]);
+      if(nextPage){
+        dispatch(incrementPage());
+        dispatch(fetchPostCOmments({ page: currentPage+1, postId, limit}))
+      }
+    }, [currentPage, limit, postId, nextPage]);
 
 
     const closeModal = useCallback(( ) => {
       setOpenModal(false);
-      dispatch(clearComments());
     }, [openModal ])
 
     return(
@@ -88,6 +71,7 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
                           comments.map((comment:any) => (
                              <CommentBox 
                                 comment={comment}
+                                key={comment.id}
                               />
                           ))
                         }
@@ -96,7 +80,7 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
                             <div className="w-full flex items-center justify-center my-2">
                               <button onClick={loadMoreComments} className="bg-[blue] w-[200px] h-[24px] text-white text-[14px] font-[500] rounded-2xl cursor-pointer">
                                 {
-                                  loadMoreLoader ? (
+                                  showMoreLoader ? (
                                     "Loading..."
                                   ) : "LoadMore"
                                 }
@@ -118,7 +102,6 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
               <div>
                 <CommentInput
                   postId={postId}
-                  getComments={getComments}
                 />
               </div>
             </div>
