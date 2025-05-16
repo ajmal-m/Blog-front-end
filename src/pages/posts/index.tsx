@@ -5,23 +5,21 @@ import PostCard from "../../component/PostCard";
 import './index.css';
 import {useDispatch, useSelector} from 'react-redux';
 import { AppDispatch, RootStore } from "../../store";
-import { updateNextPage, updatePage, updatePosts } from "../../store/postSlice";
-import { getPosts } from "../../api";
+import {  updatePage } from "../../store/postSlice";
+import { fetchPosts } from "../../store/postSlice";
 
 export default function Posts() {
 
-    const {posts, currentPage, limit, nextPage} = useSelector((state: RootStore) => state.post);
-    const dispatch = useDispatch<AppDispatch>()
-    const [loading, setLoading] = useState(false);
+    const {posts, currentPage, limit, nextPage , loading} = useSelector((state: RootStore) => state.post);
+    const dispatch = useDispatch<AppDispatch>();
     const scrollRef = useRef<HTMLDivElement | null>(null);
-
-    const theme = useSelector((state : RootStore) => state.theme.theme)
-
+    const theme = useSelector((state : RootStore) => state.theme.theme);
 
     const scrollFetchDatas = async () => {
-        const data = await getPosts({ page : currentPage, limit});
-        dispatch(updatePosts({posts: data?.posts || []}));
-        dispatch(updateNextPage({ nextPage: data?.nextPage}));
+        if(!loading){
+            dispatch(updatePage({page: currentPage+1}))
+            dispatch(fetchPosts({ page: currentPage + 1, limit}))
+        }
     };
 
     const handleScroll = () => {
@@ -29,26 +27,14 @@ export default function Posts() {
         if(!div) return null;
         if (div.scrollTop + div.clientHeight >= div.scrollHeight ) {
             // Reached at bottom
-            if(nextPage){
-                dispatch(updatePage({page: currentPage+1}))
+            if(nextPage && !loading){
                 scrollFetchDatas();
             }
         }
     }
 
     useEffect(() => {
-        const fetchPosts = async() => {
-            setLoading(true);
-            if(nextPage){
-                const data = await getPosts({ page : currentPage, limit});
-                dispatch(updateNextPage({ nextPage: data?.nextPage}));
-                dispatch(updatePage({page: currentPage+1}));
-                dispatch(updatePosts({posts:data?.posts||[]}))
-            }
-            setLoading(false);
-        }
-
-        fetchPosts();
+       dispatch(fetchPosts({ page : currentPage, limit}))
     }, []);
 
     return (

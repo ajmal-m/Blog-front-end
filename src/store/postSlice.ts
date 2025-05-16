@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Post } from "../types"
+import { getPosts } from "../api";
 
 
 type PostType = {
@@ -7,14 +8,40 @@ type PostType = {
     currentPage:number;
     limit:number;
     nextPage:boolean;
+    loading:boolean;
 }
 
+type FetchPostResponse = {
+    success: boolean;
+    posts : Post[],
+    nextPage :boolean;
+    totalPages : number;
+}
+
+type FetchPostArgs = {
+    limit:number;
+    page: number;
+}
+
+
+
+export const fetchPosts = createAsyncThunk<FetchPostResponse, FetchPostArgs>(
+    "post/fetchPosts",
+    async ( { page, limit}, thunkAPI) => {
+        const data = await getPosts({page, limit});
+        if(!data.success){
+            thunkAPI.rejectWithValue(data);
+        }
+        return data;
+    }
+)
 
 const initialState: PostType = {
     posts:[],
     currentPage:1,
     limit:10,
-    nextPage:true
+    nextPage:true,
+    loading:true
 };
 
 
@@ -39,7 +66,24 @@ const postSlice = createSlice({
             state.nextPage = true;
             state.posts = [];
         }
-    }
+    },
+    extraReducers(builder) {
+        builder.addCase(fetchPosts.pending, (state) => {
+            if(state.currentPage === 1) state.loading = true;
+        })
+
+        builder.addCase(fetchPosts.fulfilled, (state, action) => {
+            if(state.currentPage === 1) state.loading = false;
+            state.posts = [ ...state.posts, ...action.payload.posts];
+            state.nextPage = action.payload.nextPage ;
+        })
+
+        builder.addCase(fetchPosts.rejected, (state) => {
+            if(state.currentPage === 1) state.loading = false;
+            state.posts = [];
+            state.nextPage = false;
+        })
+    },
 });
 
 

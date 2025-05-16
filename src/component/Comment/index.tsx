@@ -18,8 +18,7 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
     const [loadMoreLoader, setLoadMoreLoader] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     const { comments, currentPage, limit, nextPage} = useSelector((state: RootStore) => state.comment);
-
-    console.log("Page -> ", currentPage)
+    
 
     const getComments = useCallback(async ({ page }: { page : number;}) => {
       setLoading(true);
