@@ -3,7 +3,7 @@ import SimpleEditorComponent from "../../editor/simple-editor";
 import { useEffect, useState } from "react";
 import { getPostById} from '../../api/index';
 import {ToastContainer, toast} from 'react-toastify';
-import { Post } from "../../types";
+import { Post } from "../../types/post";
 import Loader from "../../component/Loader";
 import { useSelector } from "react-redux";
 import { RootStore } from "../../store";

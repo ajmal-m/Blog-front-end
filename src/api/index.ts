@@ -1,5 +1,6 @@
 import BackEnd, { FormTypeBackend} from "../config";
-import { Post, User } from "../types";
+import { User } from "../types";
+import {Post} from '../types/post';
 
 // Get  all Posts
 export const getPosts = async({ page , limit} : { page : number; limit : number;}) => {

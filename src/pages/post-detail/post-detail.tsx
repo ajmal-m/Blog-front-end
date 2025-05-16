@@ -1,4 +1,4 @@
-import { Post } from "../../types";
+import { Post } from "../../types/post";
 import { SimpleEditor } from "../../../@/components/tiptap-templates/simple/simple-editor";
 
 export default function PostDetail({ post }: { post : Post | undefined}) {

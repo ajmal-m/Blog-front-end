@@ -1,27 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Post } from "../types"
 import { getPosts } from "../api";
-
-
-type PostType = {
-    posts:Post[];
-    currentPage:number;
-    limit:number;
-    nextPage:boolean;
-    loading:boolean;
-}
-
-type FetchPostResponse = {
-    success: boolean;
-    posts : Post[],
-    nextPage :boolean;
-    totalPages : number;
-}
-
-type FetchPostArgs = {
-    limit:number;
-    page: number;
-}
+import {FetchPostArgs, FetchPostResponse, Post, PostStoreState} from '../types/post';
 
 
 
@@ -36,7 +15,7 @@ export const fetchPosts = createAsyncThunk<FetchPostResponse, FetchPostArgs>(
     }
 )
 
-const initialState: PostType = {
+const initialState: PostStoreState = {
     posts:[],
     currentPage:1,
     limit:10,

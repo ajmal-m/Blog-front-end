@@ -1,12 +1,12 @@
-import {  useEffect, useRef, useState } from "react"
+import {  useEffect, useRef } from "react"
 import Loader from "../../component/Loader";
-import { Post } from "../../types";
 import PostCard from "../../component/PostCard";
 import './index.css';
 import {useDispatch, useSelector} from 'react-redux';
 import { AppDispatch, RootStore } from "../../store";
 import {  updatePage } from "../../store/postSlice";
 import { fetchPosts } from "../../store/postSlice";
+import { Post } from "../../types/post";
 
 export default function Posts() {
 

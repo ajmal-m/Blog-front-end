@@ -1,4 +1,4 @@
-import { Post } from "../types";
+import { Post } from "../types/post";
 import Like from "./Like";
 import Comment from "./Comment";
 import PostCardDropDown from "./Dropdown/PostCard";
