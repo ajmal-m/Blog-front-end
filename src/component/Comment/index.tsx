@@ -10,13 +10,12 @@ import { formatNumberShort } from "../../lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootStore } from "../../store";
 import {  fetchPostCOmments, incrementPage } from "../../store/commentSlice";
+import { CommentType } from "../../types/comment";
 
 const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) => {
     const [openModal, setOpenModal] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     const { comments, currentPage, limit, nextPage, loading , showMoreLoader} = useSelector((state: RootStore) => state.comment);
-
-    console.log("comment render")
 
     const openCommentModal = useCallback(() => {
       setOpenModal(true);
@@ -68,10 +67,10 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
                     comments.length ? (
                       <>
                         {
-                          comments.map((comment:any) => (
+                          comments.map((comment: CommentType) => (
                              <CommentBox 
                                 comment={comment}
-                                key={comment.id}
+                                key={comment._id}
                               />
                           ))
                         }

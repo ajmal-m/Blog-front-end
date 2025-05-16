@@ -1,27 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getPostComments } from "../api";
+import {fetchCommentArg, fetchCommentResponse, CommentStoreState} from '../types/comment';
 
-
-type CommentState = {
-    comments: CommentResponseType[],
-    currentPage: number;
-    limit:number;
-    nextPage:boolean;
-    loading:boolean;
-    message:string;
-    error:boolean;
-    showMoreLoader:boolean;
-}
-
-
-type CommentResponseType = {
-    createdAt: string;
-    postId: string;
-    text: string;
-    updatedAt: string;
-    userId:string;
-}
-const initialState : CommentState = {
+const initialState : CommentStoreState = {
     comments:[],
     currentPage:1,
     limit:10,
@@ -32,22 +13,9 @@ const initialState : CommentState = {
     showMoreLoader: false
 };
 
-type fetchPostCommentsArg = {
-    postId: string;
-    page: number;
-    limit: number;
-}
-
-type fetchPostCommentsResponse = {
-    comments: CommentResponseType[],
-    success: boolean,
-    nextPage: boolean;
-    message ?: string;
-    totalPages: number;
-}
 
 // Fetch CommentPost
-export const fetchPostCOmments = createAsyncThunk<fetchPostCommentsResponse, fetchPostCommentsArg, { rejectValue:{ success: boolean; message: string;}}>(
+export const fetchPostCOmments = createAsyncThunk<fetchCommentResponse, fetchCommentArg, { rejectValue:{ success: boolean; message: string;}}>(
     "comments/postComments",
     async ({postId, page, limit}, thunkAPI) => {
         const data = await getPostComments({ postId, page, limit});
