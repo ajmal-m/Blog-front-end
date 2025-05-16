@@ -11,24 +11,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootStore } from "../../store";
 import {  fetchPostCOmments, incrementPage } from "../../store/commentSlice";
 import { CommentType } from "../../types/comment";
+import ShowMoreButton from "./show-more";
 
 const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) => {
     const [openModal, setOpenModal] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
-    const { comments, currentPage, limit, nextPage, loading , showMoreLoader} = useSelector((state: RootStore) => state.comment);
+    const { comments, currentPage, limit, nextPage, loading } = useSelector((state: RootStore) => state.comment);
 
     const openCommentModal = useCallback(() => {
       setOpenModal(true);
       dispatch(fetchPostCOmments({ page: currentPage, limit, postId}))
     }, [ postId, limit, currentPage]);
-
-
-    const loadMoreComments = useCallback(async () => {
-      if(nextPage){
-        dispatch(incrementPage());
-        dispatch(fetchPostCOmments({ page: currentPage+1, postId, limit}))
-      }
-    }, [currentPage, limit, postId, nextPage]);
 
 
     const closeModal = useCallback(( ) => {
@@ -76,15 +69,9 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
                         }
                         {
                           nextPage && (
-                            <div className="w-full flex items-center justify-center my-2">
-                              <button onClick={loadMoreComments} className="bg-[blue] w-[200px] h-[24px] text-white text-[14px] font-[500] rounded-2xl cursor-pointer">
-                                {
-                                  showMoreLoader ? (
-                                    "Loading..."
-                                  ) : "LoadMore"
-                                }
-                              </button>
-                            </div>
+                          <ShowMoreButton
+                            postId={postId}
+                          />
                           )
                         }
                       </>
