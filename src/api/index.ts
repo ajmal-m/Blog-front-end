@@ -110,7 +110,7 @@ export const createPostComment = async ({ postId, text} : { postId: string; text
 }
 
 // Delete comment
-export const deletePostComment = async({ commentId }: { commentId : string; }) => {
-    const {data} = await BackEnd.delete(`/post/comment/${commentId}`);
+export const deletePostComment = async({ commentId, postId }: { commentId : string; postId: string; }) => {
+    const {data} = await BackEnd.delete(`/post/comment/${commentId}?postId=${postId}`);
     return data;
 }

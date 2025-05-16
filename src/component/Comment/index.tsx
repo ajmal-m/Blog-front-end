@@ -9,7 +9,7 @@ import Empty from "./empty";
 import { formatNumberShort } from "../../lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootStore } from "../../store";
-import {  fetchPostCOmments, incrementPage } from "../../store/commentSlice";
+import {  clearComments, fetchPostCOmments } from "../../store/commentSlice";
 import { CommentType } from "../../types/comment";
 import ShowMoreButton from "./show-more";
 
@@ -20,7 +20,8 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
 
     const openCommentModal = useCallback(() => {
       setOpenModal(true);
-      dispatch(fetchPostCOmments({ page: currentPage, limit, postId}))
+      dispatch(clearComments());
+      dispatch(fetchPostCOmments({ page: 1, limit, postId}))
     }, [ postId, limit, currentPage]);
 
 
@@ -64,6 +65,7 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
                              <CommentBox 
                                 comment={comment}
                                 key={comment._id}
+                                postId={postId}
                               />
                           ))
                         }
