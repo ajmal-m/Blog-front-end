@@ -1,3 +1,5 @@
+import { CommentLike } from "./comment-like";
+
 export type CommentStoreState = {
     comments: CommentType[],
     currentPage: number;
@@ -15,7 +17,10 @@ export type CommentType = {
     text: string;
     updatedAt: string;
     userId:string;
+    likes:string[] | CommentLike[],
     _id: string;
+    hasLiked:boolean;
+    likeCount:number;
 };
 
 

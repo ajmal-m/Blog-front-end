@@ -114,3 +114,20 @@ export const deletePostComment = async({ commentId, postId }: { commentId : stri
     const {data} = await BackEnd.delete(`/post/comment/${commentId}?postId=${postId}`);
     return data;
 }
+
+
+// Create comment Like
+export const createCommentLike = async ({ commentId , postId }: { commentId : string; postId: string;}) => {
+    const {data} = await BackEnd.post(`/post/comment/like/create`, {
+        commentId,
+        postId
+    });
+    return data;
+}
+
+
+// Delete Comment Like
+export const deleteCommentLike = async ({ postId, commentId }: { postId : string; commentId: string;}) => {
+    const {data} = await BackEnd.delete(`/post/comment/like/delete?postId=${postId}&commentId=${commentId}`);
+    return data;
+}
