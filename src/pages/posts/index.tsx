@@ -34,7 +34,7 @@ export default function Posts() {
     }
 
     useEffect(() => {
-        if(nextPag && currentPage === 1){
+        if(nextPage && currentPage === 1){
             dispatch(fetchPosts({ page : currentPage, limit}))
         }
     }, []);
