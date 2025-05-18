@@ -1,9 +1,22 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { Avatar } from "flowbite-react";
 
 
 
 const UserForm = memo(({ user }: { user : any}) => {
+
+    const updateAvatarImage = useCallback(async () => {
+        const inp = document.createElement("input");
+        inp.type = 'file';
+        inp.accept = 'image/*';
+        inp.addEventListener("change", function(e){
+            const imageAsset = (e.target as any).files[0];
+            const formData = new FormData();
+            formData.append("image", imageAsset);
+            console.log(formData)
+        });
+        inp.click();
+    }, [])
     return(
         <>
             <div className="w-full flex items-center justify-center">
@@ -15,8 +28,19 @@ const UserForm = memo(({ user }: { user : any}) => {
                         max-sm:min-w-[300px]
                     "
                 >
-                    <div>
+                    <div className="relative">
                         <Avatar rounded size="xl"/>
+                        <div className="absolute top-[37px] left-[46%]">
+                            <svg 
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                className="lucide lucide-image-plus-icon lucide-image-plus cursor-pointer"
+                                onClick={updateAvatarImage}
+                            >
+                                <path d="M16 5h6"/><path d="M19 2v6"/><path d="M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5"/>
+                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><circle cx="9" cy="9" r="2"/>
+                            </svg>
+                        </div>
                     </div>
                     <div>
                         <label 
@@ -33,7 +57,6 @@ const UserForm = memo(({ user }: { user : any}) => {
                             name="email"
                             value={user.name}
                             className="w-full bg-[#9897a1] rounded text-black p-3  outline-none mt-1 text-[14px]"
-                            readOnly
                         />
                     </div>
 
