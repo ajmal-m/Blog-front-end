@@ -17,6 +17,7 @@ import SingleLoader from './component/Loader/single-loader.tsx';
 import { useDispatch } from 'react-redux';
 import { verifyTokenThunk } from './store/userSlice.ts';
 import { AppDispatch } from './store/index.ts';
+import UserProfile from './pages/user/index.tsx';
 
 export default function App(){
 
@@ -33,14 +34,19 @@ export default function App(){
                 </Suspense>
             }>
                 <Route path='/' element={
-                <Suspense fallback={<SingleLoader/>}>
-                    <Posts/>
-                </Suspense>
+                    <Suspense fallback={<SingleLoader/>}>
+                        <Posts/>
+                    </Suspense>
                 }/>
                 <Route path='/post/:postId' element={
-                <Suspense fallback={<SingleLoader/>}>
-                    <PostDetail/>
-                </Suspense>
+                    <Suspense fallback={<SingleLoader/>}>
+                        <PostDetail/>
+                    </Suspense>
+                }/>
+                <Route path='/user' element={
+                    <Suspense fallback={<SingleLoader/>}>
+                        <UserProfile/>
+                    </Suspense>
                 }/>
             </Route>
             <Route path='/' element={
