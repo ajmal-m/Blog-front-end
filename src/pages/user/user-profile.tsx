@@ -12,6 +12,7 @@ const UserForm = memo(({ user }: { user : any}) => {
                         flex min-w-[400px] flex-col gap-4 
                         border-[2px] border-[#070238] p-[12px] 
                         rounded bg-[#101828] mt-4
+                        max-sm:min-w-[300px]
                     "
                 >
                     <div>
