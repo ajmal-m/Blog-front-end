@@ -38,4 +38,5 @@ export type UserState = {
     email: string;
     loggedIn: boolean;
     id: string;
+    loading ?:boolean;
 }

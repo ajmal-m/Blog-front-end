@@ -32,6 +32,7 @@ const initialState: UserState = {
     email:"",
     id:'',
     loggedIn:false,
+    loading:false
 };
 
 const userSlice = createSlice({
@@ -56,6 +57,7 @@ const userSlice = createSlice({
     extraReducers(builder) {
         builder.addCase(verifyTokenThunk.pending, (state) => {
             state.loggedIn = false;
+            state.loading = true;
         })
 
         builder.addCase(verifyTokenThunk.fulfilled, (state, action : PayloadAction<UserState>) =>{
@@ -64,10 +66,12 @@ const userSlice = createSlice({
             state.email = email;
             state.id = id;
             state.loggedIn = loggedIn;
+            state.loading = false;
         })
 
         builder.addCase(verifyTokenThunk.rejected, (state) => {
             state.loggedIn = false;
+            state.loading = false;
         })
     },
 });

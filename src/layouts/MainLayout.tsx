@@ -7,21 +7,21 @@ import { RootStore } from "../store";
 
 export default function MainLayout() {
   const navigate = useNavigate();
-  const user = useSelector((state : RootStore) => state.user);
+  const {loggedIn, loading} = useSelector((state : RootStore) => state.user);
 
-  console.log("Main Layout", user);
+  console.log("Main Layout", loggedIn, loading);
 
 
   useEffect(() => {
-    if(! user?.loggedIn){
+    if(! loggedIn && !loading){
       navigate("/auth/login")
     }
-  }, []);
+  }, [loggedIn, loading]);
   
   return (
     <>
       {
-        user?.loggedIn && (
+        loggedIn && (
           <div className="flex flex-col h-screen">
             <Navbar/>
             <Outlet/>
