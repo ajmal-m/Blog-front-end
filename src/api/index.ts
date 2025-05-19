@@ -69,8 +69,8 @@ export const createHtmlPost = async({ htmlContent, htmlObject, authorId} : { aut
 
 
 // Upload Image file
-export const uploadImage = async (formData : FormData) => {
-    const {data} = await FormTypeBackend.post('/asset-upload',formData);
+export const uploadImage = async (formData: FormData , width : number, height :number) => {
+    const {data} = await FormTypeBackend.post(`/asset-upload?width=${width}&height=${height}`,formData);
     return data;
 }
 

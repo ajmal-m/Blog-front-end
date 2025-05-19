@@ -1,21 +1,68 @@
-import { memo, useCallback } from "react";
+import { FormEvent, memo, useCallback, useEffect, useRef, useState } from "react";
 import { Avatar } from "flowbite-react";
+import { uploadImage } from "../../api";
+import PasswordInput from "./password-input";
+import TextInput from "./text-input";
 
 
 
-const UserForm = memo(({ user }: { user : any}) => {
+const UserForm = memo(({ user, toast }: { user : any; toast: any}) => {
+
+    const [uploadedImage, setUplodedImage] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [fullName, setFullName] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
+
 
     const updateAvatarImage = useCallback(async () => {
         const inp = document.createElement("input");
         inp.type = 'file';
         inp.accept = 'image/*';
-        inp.addEventListener("change", function(e){
+        inp.addEventListener("change", async function(e){
+            setLoading(true);
             const imageAsset = (e.target as any).files[0];
             const formData = new FormData();
             formData.append("image", imageAsset);
-            console.log(formData)
+            const data = await uploadImage(formData, 144, 144);
+            if(data?.url){
+                setLoading(false);
+                setUplodedImage(data.url)
+            }
         });
         inp.click();
+    }, [loading, uploadedImage]);
+
+
+    const updateProfile = useCallback((e: FormEvent) => {
+        e.preventDefault();
+        let allOk = true;
+        if(!fullName){
+            toast.error("Full Name is required.");
+            allOk = false;
+        }
+        if(!password){
+            toast.error("Password is required.");
+            allOk = false;
+        }
+         if(!confirmPassword){
+            toast.error("Confirm Password is required.");
+            allOk = false;
+        }
+        if( password !== confirmPassword){
+            toast.error("Password is not match.");
+            allOk = false;
+        }
+
+        if(!allOk){
+            return;
+        }
+        // UPdate Profile API call
+        
+    }, [fullName, password, confirmPassword, uploadedImage])
+
+    useEffect(( ) => {
+        setFullName(user.name)
     }, [])
     return(
         <>
@@ -24,23 +71,48 @@ const UserForm = memo(({ user }: { user : any}) => {
                     className="
                         flex flex-col gap-4 
                         border-[2px] border-[#070238] p-[12px] 
-                        rounded bg-[#101828] mt-4
-                        max-sm:max-w-[300px]
+                        rounded bg-[#223266] mt-4
+                        max-sm:max-w-[300px] md:min-w-[400px]
                     "
                 >
                     <div className="relative">
-                        <Avatar rounded size="xl"/>
-                        <div className="absolute top-[37px] left-[46%]">
-                            <svg 
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                className="lucide lucide-image-plus-icon lucide-image-plus cursor-pointer"
-                                onClick={updateAvatarImage}
-                            >
-                                <path d="M16 5h6"/><path d="M19 2v6"/><path d="M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5"/>
-                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><circle cx="9" cy="9" r="2"/>
-                            </svg>
-                        </div>
+                        {
+                            uploadedImage ? (
+                                <>
+                                    <Avatar rounded size="xl" img={uploadedImage} />
+                                    <div className="absolute top-0 left-0 cursor-pointer" onClick={() => setUplodedImage(null)}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-trash2-icon lucide-trash-2">
+                                        <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>
+                                        </svg>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <Avatar rounded size="xl"/>
+                                    <div className="absolute top-[37px] left-[46%]">
+                                        {
+                                            loading ? (
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                                    className="lucide lucide-loader-circle-icon lucide-loader-circle animate-spin">
+                                                    <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                                                </svg>
+                                            ) : (
+                                                <svg 
+                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                                                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                                    className="lucide lucide-image-plus-icon lucide-image-plus cursor-pointer"
+                                                    onClick={updateAvatarImage}
+                                                >
+                                                    <path d="M16 5h6"/><path d="M19 2v6"/><path d="M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5"/>
+                                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><circle cx="9" cy="9" r="2"/>
+                                                </svg>
+                                            )
+                                        }
+                                    </div>
+                                </>
+                            )
+                        }
                     </div>
                     <div>
                         <label 
@@ -52,11 +124,9 @@ const UserForm = memo(({ user }: { user : any}) => {
                         >
                             Full Name
                         </label>
-                        <input 
-                            type="email" 
-                            name="email"
-                            value={user.name}
-                            className="w-full bg-[#9897a1] rounded text-black p-3  outline-none mt-1 text-[14px]"
+                        <TextInput
+                            value={fullName}
+                            setValue={setFullName}
                         />
                     </div>
 
@@ -70,10 +140,9 @@ const UserForm = memo(({ user }: { user : any}) => {
                         >
                             Password
                         </label>
-                        <input 
-                            type="password" 
-                            name="password" 
-                            className="w-full bg-[#9897a1] rounded text-black p-3 outline-none mt-1 text-[14px]"
+                        <PasswordInput
+                            password={password}
+                            setPassword={setPassword}
                         />
                     </div>
 
@@ -89,14 +158,20 @@ const UserForm = memo(({ user }: { user : any}) => {
                         >
                             Confirm Password
                         </label>
-                        <input 
-                            type="password" 
-                            name="confirmPassword"
-                            className="w-full bg-[#9897a1] rounded text-black p-3 outline-none mt-1 text-[14px]"
-                        />
+                       <PasswordInput
+                        password={confirmPassword}
+                        setPassword={setConfirmPassword}
+                       />
                     </div>
                     
-                    <button className="w-full p-4 bg-[blue] rounded text-white font-[500] cursor-pointer text-[14px]">
+                    <button 
+                        onClick={updateProfile} 
+                        type="submit" 
+                        className="
+                            w-full p-4 bg-[#0000e7] rounded text-white 
+                            font-[500] cursor-pointer text-[14px]
+                        "
+                    >
                         Update Profile
                     </button>
                 </form>
