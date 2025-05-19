@@ -43,11 +43,12 @@ const userSlice = createSlice({
     initialState,
     reducers:{
         updateUser:(state, action : PayloadAction<UserState>) => {
-            const {name, email, id, loggedIn} = action.payload;
+            const {name, email, id, loggedIn, avatar} = action.payload;
             state.name = name;
             state.email = email;
             state.id = id;
             state.loggedIn = loggedIn;
+            state.avatar = avatar;
         },
         logOutUser:(state) => {
             localStorage.removeItem("token");

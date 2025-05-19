@@ -37,7 +37,8 @@ function LogInForm() {
                 name: response?.user?.name, 
                 email: response?.user?.email, 
                 loggedIn: true , 
-                id: response?.user?.id
+                id: response?.user?.id,
+                avatar: response?.user.avatar
             })
         );
         dispatch(clearPosts());

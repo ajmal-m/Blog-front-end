@@ -13,9 +13,10 @@ export function Profile() {
         dispatch(logOutUser());
         navigate('/auth/login');
     }
+    console.log(name, avatar)
   return (
     <Dropdown
-      label={<Avatar alt="User settings" img={avatar ?? ""} rounded />}
+      label={<Avatar alt="User settings" img={avatar ?? "" } rounded />}
       arrowIcon={false}
       inline
     >
