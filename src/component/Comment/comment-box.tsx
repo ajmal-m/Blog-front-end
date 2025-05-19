@@ -10,21 +10,21 @@ const CommentBox = memo(({ comment , postId }: { comment: CommentType ; postId: 
                 {
                     showMore ? (
                         <div>
-                            <p style={{wordWrap:'break-word'}}>{comment.text}</p>
+                            <p className="text-[#7e7e8f] text-[14px] max-sm:text-[12px] font-[500]" style={{wordWrap:'break-word'}}>{comment.text}</p>
                             {"      "}
                             {
-                                showMore && <button onClick={() => setShowMore(false)}>Show Less</button>
+                                showMore && <button onClick={() => setShowMore(false)} className="cursor-pointer text-[#7c7785] font-[400]">Show Less</button>
                             }
                         </div>
                     ) : (
                         <div>
-                            <p  style={{wordWrap:'break-word'}}>{comment.text.slice(0,100)}</p>
+                            <p className="text-[14px] text-[#7e7e8f] max-sm:text-[12px] font-[500]" style={{wordWrap:'break-word'}}>{comment.text.slice(0,100)}</p>
                             {
-                                comment.text.length > comment.text.slice(0,100).length && ' ....'
+                                comment.text.length > comment.text.slice(0,100).length && (<span className="text-[#7c7785] font-[400]">. . . . </span>)
                             }
                             {
                                 comment.text.length > comment.text.slice(0,100).length && (
-                                    <button onClick={() => setShowMore(true)}>Show More</button>
+                                    <button onClick={() => setShowMore(true)} className="cursor-pointer text-[#7c7785] font-[400]">Show More</button>
                                 )
                             }
                         </div>

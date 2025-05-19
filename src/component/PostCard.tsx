@@ -37,7 +37,7 @@ export default function PostCard({ post }: {post : Post}) {
                             )
                         }
                     </div>
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-active-color h-[96px] overflow-hidden mt-2">
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-[#c1c1c1] h-[96px] overflow-hidden mt-2">
                         {post.title}
                     </h5>
                     <div className="flex items-center gap-1 mt-[12px] justify-between">

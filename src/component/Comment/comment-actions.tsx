@@ -30,7 +30,7 @@ const CommentActions = memo(({ comment , postId }: { comment : CommentType ; pos
         <>
         <div className="flex justify-between items-center mt-[6px]">
             <div>
-                <p className="text-[12px] text-blue-300">{ getTimeToNow(comment.createdAt)}</p>
+                <p className="text-[12px] text-[#336aa4]">{ getTimeToNow(comment.createdAt)}</p>
             </div>
             <div className="flex items-center gap-[4px]">
                 <Like 
@@ -39,7 +39,7 @@ const CommentActions = memo(({ comment , postId }: { comment : CommentType ; pos
                 />
                 {
                     id === comment.userId && (
-                        <p className={`text-[12px] cursor-pointer ${confirmDelete ? "text-red-500" :"text-blue-300"}`} onClick={deleteComment}>
+                        <p className={`text-[12px] cursor-pointer ${confirmDelete ? "text-red-500" :"text-[#336aa4]"}`} onClick={deleteComment}>
                             {
                                 confirmDelete ? "Confirm" :"Delete"
                             }
