@@ -1,9 +1,9 @@
 
-import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from "flowbite-react";
+import { Avatar, Dropdown, DropdownHeader, DropdownItem } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootStore } from "../../store";
 import { logOutUser } from "../../store/userSlice";
-import { useNavigate } from "react-router";
+import { useNavigate, NavLink } from "react-router";
 
 export function Profile() {
     const dispatch = useDispatch<AppDispatch>();
@@ -23,6 +23,11 @@ export function Profile() {
         <span className="block text-[12px] text-white">{name}</span>
         <span className="block truncate text-sm font-medium text-white mt-1">{email}</span>
       </DropdownHeader>
+      <DropdownItem>
+        <NavLink to={'/user'}>
+          Edit Profile
+        </NavLink>
+      </DropdownItem>
       <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
     </Dropdown>
   );
