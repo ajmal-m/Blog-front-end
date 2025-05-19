@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { toggleTheme } from "../store/themeSlice";
 import { logOutUser } from "../store/userSlice";
 import { RootStore } from "../store";
+import { Profile } from "./Dropdown/Profile";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -15,10 +16,7 @@ const Navbar = () => {
   const theme = useSelector((state : RootStore) => state.theme.theme);
   const user = useSelector((state : RootStore) => (state.user));
 
-  const handleLogout = () => {
-    dispatch(logOutUser());
-    navigate('/auth/login');
-  }
+
 
   return (
     <nav className="bg-white dark:bg-gray-900 w-full z-20 border-b border-gray-200 dark:border-gray-600">
@@ -45,29 +43,23 @@ const Navbar = () => {
                   </NavLink>
               </button>
             </li>
-            <li  className="flex items-center">
-              <button onClick={() => navigate('/user')} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                { user ? user.name : 'Guest'}
-              </button>
-            </li>
-            {
-              user?.loggedIn && (
-                <li  className="flex items-center">
-                  <button type="button" onClick={handleLogout} className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Logout
-                  </button>
-                </li>
-              )
-            }
            {
             !location.pathname.includes("/post/") && (
               <li>
-                <button onClick={ () => dispatch(toggleTheme())} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button 
+                  onClick={ () => dispatch(toggleTheme())} type="button" 
+                  className="text-white cursor-pointer bg-blue-700 hover:bg-blue-800 
+                  focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 
+                  text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
                   { theme === 'dark' ? 'Light' : 'Dark'}
                 </button>
               </li>
             )
            }
+           <li>
+            <Profile/>
+           </li>
           </ul>
         </div>
         <div className="hidden max-sm:flex">
