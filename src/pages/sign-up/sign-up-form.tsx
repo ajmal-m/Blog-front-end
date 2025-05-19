@@ -41,7 +41,8 @@ function SignUpForm() {
             name:response?.user?.name,
             email: response?.user?.email,
             loggedIn:true,
-            id: response?.user?.id
+            id: response?.user?.id,
+            avatar:null
         }));
         setLoading(false);
         navigate("/");

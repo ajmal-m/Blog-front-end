@@ -4,17 +4,14 @@ import {ThemeToggle} from '../../@/components/tiptap-templates/simple/theme-togg
 
 import {useSelector, useDispatch} from 'react-redux';
 import { toggleTheme } from "../store/themeSlice";
-import { logOutUser } from "../store/userSlice";
 import { RootStore } from "../store";
 import { Profile } from "./Dropdown/Profile";
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   
   const theme = useSelector((state : RootStore) => state.theme.theme);
-  const user = useSelector((state : RootStore) => (state.user));
 
 
 
