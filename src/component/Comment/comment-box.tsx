@@ -11,7 +11,7 @@ const CommentBox = memo(({ comment , postId }: { comment: CommentType ; postId: 
                 <div className="flex items-center justify-start gap-2">
                     <Avatar img={comment?.user?.avatar ?? ""} alt="avatar of Jese" rounded size="sm"/>
                     <div className="text-[14px] font-[500] text-[#919191]">
-                         {comment.user.name}
+                         {comment?.user?.name ?? "User"}
                     </div>
                 </div>
                 {
