@@ -15,13 +15,15 @@ export const verifyTokenThunk = createAsyncThunk<UserState>(
                 email: response?.user?.email,
                 id: response?.user?.id,
                 loggedIn : true,
+                avatar: response.user.avatar
             }
         }else{
             return{
                 loggedIn : false,
                 name:"",
                 email:"",
-                id:""
+                id:"",
+                avatar:null
             }
         }
     }
@@ -32,7 +34,8 @@ const initialState: UserState = {
     email:"",
     id:'',
     loggedIn:false,
-    loading:false
+    loading:false,
+    avatar: null
 };
 
 const userSlice = createSlice({
@@ -52,6 +55,11 @@ const userSlice = createSlice({
             state.name ="";
             state.email = "";
             state.id = "";
+        },
+        updateUserDetail: (state, action: PayloadAction<{name : string,avatar: string | null}>) => {
+            const {name, avatar} = action.payload;
+            state.name = name;
+            state.avatar = avatar
         }
     },
     extraReducers(builder) {
@@ -61,12 +69,13 @@ const userSlice = createSlice({
         })
 
         builder.addCase(verifyTokenThunk.fulfilled, (state, action : PayloadAction<UserState>) =>{
-            const {name, email, id, loggedIn} = action.payload;
+            const {name, email, id, loggedIn, avatar} = action.payload;
             state.name = name;
             state.email = email;
             state.id = id;
             state.loggedIn = loggedIn;
             state.loading = false;
+            state.avatar = avatar;
         })
 
         builder.addCase(verifyTokenThunk.rejected, (state) => {
@@ -76,5 +85,5 @@ const userSlice = createSlice({
     },
 });
 
-export const {updateUser, logOutUser} = userSlice.actions;
+export const {updateUser, logOutUser, updateUserDetail} = userSlice.actions;
 export default userSlice.reducer;

@@ -1,18 +1,28 @@
-import { FormEvent, memo, useCallback, useEffect, useRef, useState } from "react";
+import { FormEvent, memo, useCallback, useEffect, useState } from "react";
 import { Avatar } from "flowbite-react";
-import { uploadImage } from "../../api";
+import { updateUser, uploadImage } from "../../api";
 import PasswordInput from "./password-input";
 import TextInput from "./text-input";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootStore } from "../../store";
+import { useNavigate } from "react-router";
+import { updateUserDetail } from "../../store/userSlice";
+import Loader from "./loader";
 
 
 
-const UserForm = memo(({ user, toast }: { user : any; toast: any}) => {
+const UserForm = memo(({ toast }: { toast: any}) => {
 
-    const [uploadedImage, setUplodedImage] = useState<string | null>(null);
+    const navigate = useNavigate();
+    const {name, avatar} = useSelector((state: RootStore) => state.user);
+    const [uploadedImage, setUplodedImage] = useState<string | null >(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const [submitLoader, setSubmitLoader] = useState(false);
     const [fullName, setFullName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const userId = useSelector((state: RootStore) => state.user).id;
+    const dispatch = useDispatch<AppDispatch>();
 
 
     const updateAvatarImage = useCallback(async () => {
@@ -34,7 +44,7 @@ const UserForm = memo(({ user, toast }: { user : any; toast: any}) => {
     }, [loading, uploadedImage]);
 
 
-    const updateProfile = useCallback((e: FormEvent) => {
+    const updateProfile = useCallback(async(e: FormEvent) => {
         e.preventDefault();
         let allOk = true;
         if(!fullName){
@@ -58,11 +68,29 @@ const UserForm = memo(({ user, toast }: { user : any; toast: any}) => {
             return;
         }
         // UPdate Profile API call
+        setSubmitLoader(true);
+        const response = await updateUser({
+            name: fullName,
+            password,
+            avatar: uploadedImage,
+            id: userId
+        });
+
+        if(response.success){
+            toast.success(response.message);
+            dispatch(updateUserDetail({ name: fullName, avatar: uploadedImage}));
+            setSubmitLoader(false);
+            navigate("/");
+        }else{
+            setSubmitLoader(false);
+            toast.error(response.message);
+        }
         
     }, [fullName, password, confirmPassword, uploadedImage])
 
     useEffect(( ) => {
-        setFullName(user.name)
+        setFullName(name);
+        setUplodedImage(avatar);
     }, [])
     return(
         <>
@@ -92,11 +120,7 @@ const UserForm = memo(({ user, toast }: { user : any; toast: any}) => {
                                     <div className="absolute top-[37px] left-[46%]">
                                         {
                                             loading ? (
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                                    className="lucide lucide-loader-circle-icon lucide-loader-circle animate-spin">
-                                                    <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
-                                                </svg>
+                                                <Loader color="black"/>
                                             ) : (
                                                 <svg 
                                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
@@ -169,10 +193,15 @@ const UserForm = memo(({ user, toast }: { user : any; toast: any}) => {
                         type="submit" 
                         className="
                             w-full p-4 bg-[#0000e7] rounded text-white 
-                            font-[500] cursor-pointer text-[14px]
+                            font-[500] cursor-pointer text-[14px] flex
+                            justify-center
                         "
                     >
-                        Update Profile
+                        {
+                            submitLoader ? (
+                                <Loader color="currentColor"/>
+                            ) : ("Update Profile")
+                        }
                     </button>
                 </form>
             </div>

@@ -131,3 +131,15 @@ export const deleteCommentLike = async ({ postId, commentId }: { postId : string
     const {data} = await BackEnd.delete(`/post/comment/like/delete?postId=${postId}&commentId=${commentId}`);
     return data;
 }
+
+
+// Update User
+export const updateUser = async ({name, password, avatar, id} : { name : string; password: string; avatar: string | null; id: string;}) => {
+    const {data} = await BackEnd.put('/user/update', {
+        name,
+        password,
+        avatar,
+        id
+    });
+    return data;
+}

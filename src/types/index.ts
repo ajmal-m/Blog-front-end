@@ -39,4 +39,5 @@ export type UserState = {
     loggedIn: boolean;
     id: string;
     loading ?:boolean;
+    avatar : string | null;
 }

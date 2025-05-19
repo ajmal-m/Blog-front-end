@@ -6,7 +6,6 @@ import { ToastContainer, toast } from "react-toastify";
 
 const UserProfile = memo(() => {
     const theme = useSelector((state : RootStore) => state.theme.theme);
-    const user = useSelector( ( state : RootStore ) => state.user);
     useEffect(() => {
 
     }, [])
@@ -14,7 +13,6 @@ const UserProfile = memo(() => {
         <>
            <div className={`min-h-[calc(100vh-73px)] overflow-y-scroll ${theme === 'dark' ? 'bg-[black]' : 'bg-[white]'}`}>
                 <UserForm
-                    user={user}
                     toast={toast}
                 />
            </div>
