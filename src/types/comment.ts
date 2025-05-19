@@ -21,6 +21,13 @@ export type CommentType = {
     _id: string;
     hasLiked:boolean;
     likeCount:number;
+    user : {
+            _id: string;
+            name: string;
+            email: string;
+            password : string;
+            avatar:string|null;
+        }
 };
 
 

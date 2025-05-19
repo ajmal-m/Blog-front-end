@@ -1,0 +1,15 @@
+
+/* WebKit Scrollbar (Chrome, Safari) */
+#scrollable-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+#scrollable-container::-webkit-scrollbar-track {
+  background: #1e2939;
+}
+
+#scrollable-container::-webkit-scrollbar-thumb {
+  background: #03072e;
+  border-radius: 4px;
+}
+

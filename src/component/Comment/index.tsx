@@ -12,6 +12,7 @@ import { AppDispatch, RootStore } from "../../store";
 import {  clearComments, fetchPostCOmments } from "../../store/commentSlice";
 import { CommentType } from "../../types/comment";
 import ShowMoreButton from "./show-more";
+import './index.css';
 
 const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) => {
     const [openModal, setOpenModal] = useState(false);
@@ -55,7 +56,7 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
               </div>
 
               {/* Comment section */}
-              <div className="h-[60vh] overflow-y-auto">
+              <div className="h-[60vh] overflow-y-auto pr-1" id="scrollable-container">
                 {
                   loading  ? (<Loader/>) : (
                     comments.length ? (
