@@ -16,7 +16,7 @@ export function Profile() {
     console.log(name, avatar)
   return (
     <Dropdown
-      label={<Avatar alt="User settings" img={avatar ?? "" } rounded />}
+      label={<Avatar className="cursor-pointer" alt="User settings" img={avatar ?? "" } rounded />}
       arrowIcon={false}
       inline
     >
