@@ -52,7 +52,10 @@ export default function Posts() {
             <div ref={scrollRef} className={`min-h-[calc(100vh-73px)] overflow-y-scroll ${theme === 'dark' ? 'bg-[black]' : 'bg-[white]'}`}  onScroll={handleScroll} >
                 {
                     loading ? (
-                        <Loader/>
+                        <div className="mt-[24px]">
+                            <Loader/>
+                        </div>
+            
                     ) : (
                         posts.length ? (
                             <>
@@ -72,8 +75,13 @@ export default function Posts() {
                                 }
                             </>
                         ) : (
-                            <div className={`h-screen w-screen flex items-center justify-center ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                                Empty 
+                            <div className={`flex items-center justify-center mt-[24px] ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
+                               <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" 
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" 
+                                className="lucide lucide-circle-off-icon lucide-circle-off"
+                               >
+                               <path d="m2 2 20 20"/><path d="M8.35 2.69A10 10 0 0 1 21.3 15.65"/><path d="M19.08 19.08A10 10 0 1 1 4.92 4.92"/>
+                               </svg> 
                             </div>
                         )
                     )
