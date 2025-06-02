@@ -3,8 +3,8 @@ import { User } from "../types";
 import {Post} from '../types/post';
 
 // Get  all Posts
-export const getPosts = async({ page , limit} : { page : number; limit : number;}) => {
-    const {data} = await BackEnd.get(`/post/posts?page=${page}&limit=${limit}` );
+export const getPosts = async({ page , limit , q} : { page : number; limit : number; q : string;}) => {
+    const {data} = await BackEnd.get(`/post/posts?page=${page}&limit=${limit}&q=${q}` );
     return data;
 };
 

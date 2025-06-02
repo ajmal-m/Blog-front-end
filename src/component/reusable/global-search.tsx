@@ -1,11 +1,19 @@
 import React, { FormEvent, memo, useCallback, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router";
+import { clearPosts, fetchPosts } from "../../store/postSlice";
+import { AppDispatch, RootStore } from "../../store";
 
 
 export const GlobalSearch = memo(() => {
+
+    const {limit} = useSelector((state : RootStore) => state.post)
     const [search, setSearch] = useState<string>("");
     const [params] = useSearchParams();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+
+
     const updateSearch = useCallback((e : FormEvent) => {
         e.preventDefault();
         navigate(`/?search=${search}`)
@@ -17,7 +25,9 @@ export const GlobalSearch = memo(() => {
             setSearch(value);
         }else{
             setSearch(value);
-            navigate('/?search=')
+            navigate('/?search=');
+            dispatch(clearPosts());
+            dispatch(fetchPosts({limit : limit, page : 1, q :value || ""}))
         }
 
     }, [search])

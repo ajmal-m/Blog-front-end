@@ -40,4 +40,5 @@ export type FetchPostResponse = {
 export type FetchPostArgs = {
     limit:number;
     page: number;
+    q:string;
 }

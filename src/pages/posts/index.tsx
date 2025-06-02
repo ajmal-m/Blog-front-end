@@ -4,7 +4,7 @@ import PostCard from "../../component/PostCard";
 import './index.css';
 import {useDispatch, useSelector} from 'react-redux';
 import { AppDispatch, RootStore } from "../../store";
-import {  updatePage } from "../../store/postSlice";
+import {  clearPosts, updatePage } from "../../store/postSlice";
 import { fetchPosts } from "../../store/postSlice";
 import { Post } from "../../types/post";
 import { useSearchParams } from "react-router";
@@ -19,7 +19,7 @@ export default function Posts() {
     const scrollFetchDatas = async () => {
         if(!loading){
             dispatch(updatePage({page: currentPage+1}))
-            dispatch(fetchPosts({ page: currentPage + 1, limit}))
+            dispatch(fetchPosts({ page: currentPage + 1, limit, q : params.get("search") || ""}))
         }
     };
 
@@ -36,13 +36,14 @@ export default function Posts() {
 
     useEffect(() => {
         if(nextPage && currentPage === 1){
-            dispatch(fetchPosts({ page : currentPage, limit}))
+            dispatch(fetchPosts({ page : currentPage, limit, q : params.get("search") || ""}))
         }
     }, []);
 
     useEffect(() => {
-        if(params.get("search")){
-            debugger
+        if( params.get("search") ){
+            dispatch(clearPosts());
+            dispatch(fetchPosts({ page : 1, limit, q : params.get("search") || ""}))
         }
     }, [params])
 

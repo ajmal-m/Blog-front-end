@@ -6,8 +6,8 @@ import {FetchPostArgs, FetchPostResponse, Post, PostStoreState} from '../types/p
 
 export const fetchPosts = createAsyncThunk<FetchPostResponse, FetchPostArgs>(
     "post/fetchPosts",
-    async ( { page, limit}, thunkAPI) => {
-        const data = await getPosts({page, limit});
+    async ( { page, limit , q}, thunkAPI) => {
+        const data = await getPosts({page, limit, q});
         if(!data.success){
             thunkAPI.rejectWithValue(data);
         }
