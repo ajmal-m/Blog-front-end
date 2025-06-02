@@ -1,9 +1,10 @@
 import BackEnd, { FormTypeBackend} from "../config";
-import { Post, User } from "../types";
+import { User } from "../types";
+import {Post} from '../types/post';
 
 // Get  all Posts
-export const getPosts = async({ page , limit} : { page : number; limit : number;}) => {
-    const {data} = await BackEnd.get(`/post/posts?page=${page}&limit=${limit}` );
+export const getPosts = async({ page , limit , q} : { page : number; limit : number; q : string;}) => {
+    const {data} = await BackEnd.get(`/post/posts?page=${page}&limit=${limit}&q=${q}` );
     return data;
 };
 
@@ -68,8 +69,8 @@ export const createHtmlPost = async({ htmlContent, htmlObject, authorId} : { aut
 
 
 // Upload Image file
-export const uploadImage = async (formData : FormData) => {
-    const {data} = await FormTypeBackend.post('/asset-upload',formData);
+export const uploadImage = async (formData: FormData , width : number, height :number) => {
+    const {data} = await FormTypeBackend.post(`/asset-upload?width=${width}&height=${height}`,formData);
     return data;
 }
 
@@ -94,8 +95,8 @@ export const postLikeUpdate = async ({
 }
 
 // get Post comments
-export const getPostComments = async ({postId}: { postId: string}) => {
-    const {data} = await BackEnd.get(`/post/comment/${postId}`);
+export const getPostComments = async ({postId , page, limit }: { postId: string, page:number; limit:number }) => {
+    const {data} = await BackEnd.get(`/post/comment/${postId}?page=${page}&limit=${limit}`);
     return data;
 }
 
@@ -104,6 +105,41 @@ export const createPostComment = async ({ postId, text} : { postId: string; text
     const {data} = await BackEnd.post('/post/comment/create', {
         postId,
         text
+    });
+    return data;
+}
+
+// Delete comment
+export const deletePostComment = async({ commentId, postId }: { commentId : string; postId: string; }) => {
+    const {data} = await BackEnd.delete(`/post/comment/${commentId}?postId=${postId}`);
+    return data;
+}
+
+
+// Create comment Like
+export const createCommentLike = async ({ commentId , postId }: { commentId : string; postId: string;}) => {
+    const {data} = await BackEnd.post(`/post/comment/like/create`, {
+        commentId,
+        postId
+    });
+    return data;
+}
+
+
+// Delete Comment Like
+export const deleteCommentLike = async ({ postId, commentId }: { postId : string; commentId: string;}) => {
+    const {data} = await BackEnd.delete(`/post/comment/like/delete?postId=${postId}&commentId=${commentId}`);
+    return data;
+}
+
+
+// Update User
+export const updateUser = async ({name, password, avatar, id} : { name : string; password: string; avatar: string | null; id: string;}) => {
+    const {data} = await BackEnd.put('/user/update', {
+        name,
+        password,
+        avatar,
+        id
     });
     return data;
 }

@@ -2,16 +2,19 @@
 import {Button} from '../../../tiptap-ui-primitive/button';
 import { useTiptapEditor } from "../../../../hooks/use-tiptap-editor";
 import {createHtmlPost, UpdatePost} from '../../../../../src/api/index'
-import { useAuth } from '../../../../../src/hooks/authContext';
 import { useNavigate } from 'react-router';
 import { Post } from '../../../../../src/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootStore } from '../../../../../src/store';
+import { clearPosts } from '../../../../../src/store/postSlice';
 
 export default function Preview({
   post
 }: { post : Post | undefined}) {
 
     const editor = useTiptapEditor();
-    const {user} = useAuth();
+    const user = useSelector((state: RootStore) =>state.user);
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const getHTMLcontent = () => {
         console.log(editor?.getHTML());
@@ -30,6 +33,7 @@ export default function Preview({
             alert(`${data.message}`);
             return;
           }
+          dispatch(clearPosts())
           navigate("/")
       }else{
         // Editing exist post

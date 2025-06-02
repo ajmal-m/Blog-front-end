@@ -35,7 +35,7 @@ export const handleImageUpload = async (
 
 
 
-  const data = await uploadImage(formData);
+  const data = await uploadImage(formData, 500, 500);
 
   console.log("data url --> " ,data?.url)
   if(data?.success){

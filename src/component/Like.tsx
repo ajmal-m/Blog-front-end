@@ -2,7 +2,8 @@ import { formatNumberShort } from "../lib/utils";
 import {memo, useEffect, useRef, useState} from 'react';
 import '../styles/Like.css';
 import { postLikeUpdate } from "../api";
-import { useAuth } from "../hooks/authContext";
+import { useSelector } from "react-redux";
+import { RootStore } from "../store";
 
 const Like = memo(
     ({ liked, color = 'blue', likeCount = 0, postId }: {
@@ -16,7 +17,7 @@ const Like = memo(
     const [currentLIkeCount, setCurrentLikeCount] = useState<number>(0);
     const iconRef = useRef<SVGSVGElement|null>(null);
     const debounceTimer = useRef<NodeJS.Timeout|null>(null);
-    const {user} = useAuth();
+    const user = useSelector((state: RootStore) => state.user);
 
     const updateLike = () => {
         const iconItem = iconRef.current;
@@ -31,7 +32,7 @@ const Like = memo(
             await postLikeUpdate({
                 postId: postId,
                 userId : user?.id,
-                likeStatus : !likeStatus ?  'like' : 'unlike'
+                likeStatus : !likeStatus ?  'like' : 'unlike',
             })
         }, 500);
     };
@@ -45,7 +46,7 @@ const Like = memo(
         <div className="flex items-center font-bold text-white">
             <svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                width="24" height="24" viewBox="0 0 24 24" 
+                width="16" height="16" viewBox="0 0 24 24" 
                 fill={`${likeStatus ? color : 'none'}`} stroke="white" stroke-width="2" 
                 stroke-linecap="round" stroke-linejoin="round" 
                 className="lucide lucide-heart-icon lucide-heart cursor-pointer"

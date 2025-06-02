@@ -3,15 +3,16 @@ import SimpleEditorComponent from "../../editor/simple-editor";
 import { useEffect, useState } from "react";
 import { getPostById} from '../../api/index';
 import {ToastContainer, toast} from 'react-toastify';
-import { Post } from "../../types";
+import { Post } from "../../types/post";
 import Loader from "../../component/Loader";
-import { useAuth } from "../../hooks/authContext";
+import { useSelector } from "react-redux";
+import { RootStore } from "../../store";
 
 export default function EditPost(){
     const {postId } = useParams();
     const [loading, setLoading] = useState(true);
     const [post, setPost] = useState<Post>();
-    const {user} = useAuth();
+    const user = useSelector((state: RootStore) => state.user);
     const navigate = useNavigate();
 
     useEffect(() => {

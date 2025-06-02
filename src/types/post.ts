@@ -1,3 +1,4 @@
+
 export type Post = {
     title: string;
     description: string;
@@ -10,7 +11,7 @@ export type Post = {
         name: string;
         email: string;
         password : string;
-        avatar:string|null;
+        avatar: string | null
     };
     thumbnail?:{
         src?: string;
@@ -21,24 +22,23 @@ export type Post = {
     comments?:object[],
     creadtedAt?:string;
 }
-
-
-export type User = {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword ?: string;
+export type PostStoreState = {
+    posts:Post[];
+    currentPage:number;
+    limit:number;
+    nextPage:boolean;
+    loading:boolean;
 }
 
-export type CommentType = {
-    text : string;
+export type FetchPostResponse = {
+    success: boolean;
+    posts : Post[],
+    nextPage :boolean;
+    totalPages : number;
 }
 
-export type UserState = {
-    name: string;
-    email: string;
-    loggedIn: boolean;
-    id: string;
-    loading ?:boolean;
-    avatar : string | null;
+export type FetchPostArgs = {
+    limit:number;
+    page: number;
+    q:string;
 }

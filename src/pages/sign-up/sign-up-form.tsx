@@ -3,7 +3,9 @@ import { User } from "../../types";
 import {toast, ToastContainer} from 'react-toastify';
 import { CreateUser } from "../../api";
 import { useNavigate } from "react-router";
-import { useAuth } from "../../hooks/authContext";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../store/userSlice";
+import { AppDispatch } from "../../store";
 
 function SignUpForm() {
 
@@ -19,8 +21,7 @@ function SignUpForm() {
 
     const navigate = useNavigate();
 
-
-    const {updateUser} = useAuth();
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = async (e : React.FormEvent) => {
         setLoading(true);
@@ -36,12 +37,13 @@ function SignUpForm() {
             return
         }
         localStorage.setItem("token", response.token);
-        updateUser({
+        dispatch(updateUser({
             name:response?.user?.name,
             email: response?.user?.email,
             loggedIn:true,
-            id: response?.user?.id
-        });
+            id: response?.user?.id,
+            avatar:null
+        }));
         setLoading(false);
         navigate("/");
     }

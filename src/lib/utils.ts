@@ -1,3 +1,5 @@
+import { formatDistanceToNow } from 'date-fns';
+
 export const formatWithCommas = (num : number) => {
   return new Intl.NumberFormat().format(num);
 };
@@ -12,4 +14,8 @@ export const formatNumberShort = (num : number) => {
   } else {
     return num.toString();
   }
+}
+
+export const getTimeToNow = (dateString : string) => {
+   return formatDistanceToNow(new Date(dateString), { addSuffix: true });
 }

@@ -1,23 +1,27 @@
-import { NavLink, useLocation, useNavigate } from "react-router";
-import { useAuth } from "../hooks/authContext";
-import { UseTheme } from "../hooks/themeContext";
+import { NavLink, useLocation } from "react-router";
 import { DrawerMenu } from "./Drawer";
 import {ThemeToggle} from '../../@/components/tiptap-templates/simple/theme-toggle'
 
-const Navbar = () => {
-  const {user, logOut} = useAuth();
-  const navigate = useNavigate();
-  const {theme, updateTheme} = UseTheme();
-  const location = useLocation();
+import {useSelector, useDispatch} from 'react-redux';
+import { toggleTheme } from "../store/themeSlice";
+import { RootStore } from "../store";
+import { Profile } from "./Dropdown/Profile";
+import { GlobalSearch } from "./reusable/global-search";
 
-  const handleLogout = () => {
-    logOut();
-    navigate('/auth/login');
-  }
+const Navbar = () => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  
+  const theme = useSelector((state : RootStore) => state.theme.theme);
+
+
 
   return (
     <nav className="bg-white dark:bg-gray-900 w-full z-20 border-b border-gray-200 dark:border-gray-600">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="flex flex-wrap items-center justify-between p-4">
+        <div className="hidden md:flex">
+         <GlobalSearch/>
+        </div>
         <div
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-sticky"
@@ -40,29 +44,23 @@ const Navbar = () => {
                   </NavLink>
               </button>
             </li>
-            <li  className="flex items-center">
-              <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                { user ? user.name : 'Guest'}
-              </button>
-            </li>
-            {
-              user?.loggedIn && (
-                <li  className="flex items-center">
-                  <button type="button" onClick={handleLogout} className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Logout
-                  </button>
-                </li>
-              )
-            }
            {
             !location.pathname.includes("/post/") && (
               <li>
-                <button onClick={ () => updateTheme( theme === 'dark' ? 'light' : 'dark' )} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button 
+                  onClick={ () => dispatch(toggleTheme())} type="button" 
+                  className="text-white cursor-pointer bg-blue-700 hover:bg-blue-800 
+                  focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 
+                  text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
                   { theme === 'dark' ? 'Light' : 'Dark'}
                 </button>
               </li>
             )
            }
+           <li>
+            <Profile/>
+           </li>
           </ul>
         </div>
         <div className="hidden max-sm:flex">

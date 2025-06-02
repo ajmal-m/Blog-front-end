@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.8",
+    "@reduxjs/toolkit": "^2.8.1",
     "@tiptap/extension-highlight": "^2.11.7",
     "@tiptap/extension-image": "^2.11.7",
     "@tiptap/extension-link": "^2.11.7",
@@ -26,12 +27,14 @@
     "@tiptap/react": "^2.11.7",
     "@tiptap/starter-kit": "^2.11.7",
     "axios": "^1.8.4",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
     "flowbite-react": "^0.11.7",
     "html-react-parser": "^5.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-html-parser": "^2.0.2",
+    "react-redux": "^9.2.0",
     "react-router": "^7.5.0",
     "react-toastify": "^11.0.5",
     "reactjs-tiptap-editor": "^0.3.1"

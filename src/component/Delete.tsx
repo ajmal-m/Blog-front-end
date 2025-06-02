@@ -1,6 +1,5 @@
 import { Button, Modal, ModalBody, ModalHeader } from "flowbite-react";
 import { useCallback, useState } from "react";
-import { toast, ToastContainer} from 'react-toastify';
 
 export default function Delete({ id, method, text} : { id: string | undefined; method:any, text: string}){
     const [openModal, setOpenModal] = useState(false);
@@ -10,10 +9,9 @@ export default function Delete({ id, method, text} : { id: string | undefined; m
         const data = await method({ id });
         if(data?.success){
             setOpenModal(false)
-            toast.success("post deleted successfully.");
             window.location.reload();
         }else{
-            toast.error(`${data?.message}`);
+            alert(`${data?.message}`);
         }
     }, [ method, id])
     return(<>
@@ -47,6 +45,5 @@ export default function Delete({ id, method, text} : { id: string | undefined; m
             </div>
             </ModalBody>
         </Modal>
-        <ToastContainer/>
     </>)
 }

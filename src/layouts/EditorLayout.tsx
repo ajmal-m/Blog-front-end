@@ -1,10 +1,11 @@
 import { Outlet, useNavigate } from "react-router";
-import { useAuth } from "../hooks/authContext";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootStore } from "../store";
 
 export default function() {
 
-    const {user} = useAuth();
+    const user = useSelector((state:RootStore) => state.user);
     const navigate = useNavigate();
 
 
