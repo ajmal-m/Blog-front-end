@@ -7,9 +7,10 @@ import { AppDispatch, RootStore } from "../../store";
 import {  updatePage } from "../../store/postSlice";
 import { fetchPosts } from "../../store/postSlice";
 import { Post } from "../../types/post";
+import { useSearchParams } from "react-router";
 
 export default function Posts() {
-
+    const [params] = useSearchParams();
     const {posts, currentPage, limit, nextPage , loading} = useSelector((state: RootStore) => state.post);
     const dispatch = useDispatch<AppDispatch>();
     const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -38,6 +39,12 @@ export default function Posts() {
             dispatch(fetchPosts({ page : currentPage, limit}))
         }
     }, []);
+
+    useEffect(() => {
+        if(params.get("search")){
+            debugger
+        }
+    }, [params])
 
     return (
         <>
