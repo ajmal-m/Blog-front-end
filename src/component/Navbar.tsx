@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { toggleTheme } from "../store/themeSlice";
 import { RootStore } from "../store";
 import { Profile } from "./Dropdown/Profile";
+import { GlobalSearch } from "./reusable/global-search";
 
 const Navbar = () => {
   const location = useLocation();
@@ -17,7 +18,10 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white dark:bg-gray-900 w-full z-20 border-b border-gray-200 dark:border-gray-600">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="flex flex-wrap items-center justify-between p-4">
+        <div className="hidden md:flex">
+         <GlobalSearch/>
+        </div>
         <div
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-sticky"
