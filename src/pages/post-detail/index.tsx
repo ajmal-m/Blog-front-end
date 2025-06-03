@@ -33,7 +33,9 @@ export default function PostDetail() {
         <>
         {
             loading ? (
-                <Loader/>
+                <div className="mt-[24px]">
+                    <Loader/>
+                </div>
             ) : (
                 <PostDetails
                  post={post}
