@@ -70,6 +70,9 @@ const Navbar = () => {
         <div className="hidden max-sm:flex">
           <DrawerMenu/>
         </div>
+        <div className="hidden max-sm:flex">
+          <GlobalSearch/>
+        </div>
         <div>
             {location.pathname.includes("/post/") && (
               <ThemeToggle/>
