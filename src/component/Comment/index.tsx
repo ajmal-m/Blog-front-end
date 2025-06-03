@@ -16,6 +16,7 @@ import './index.css';
 
 const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) => {
     const [openModal, setOpenModal] = useState(false);
+    const [showCommentInput, setCommentInput] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     const { comments, currentPage, limit, nextPage, loading } = useSelector((state: RootStore) => state.comment);
 
@@ -89,9 +90,23 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
 
               {/* Text Input update */}
               <div>
-                <CommentInput
-                  postId={postId}
-                />
+                {
+                  !showCommentInput && (
+                    <button
+                      className="bg-[#0000ff] w-full text-white text-[16px] font-[500] py-[4px] mt-[9px]"
+                      onClick={() => setCommentInput(true)}
+                    >
+                      Add Comment
+                    </button>
+                  )
+                }
+                {
+                  showCommentInput && (
+                    <CommentInput
+                      postId={postId}
+                    />
+                  )
+                }
               </div>
             </div>
           </Modal>
