@@ -48,7 +48,7 @@ export const GlobalSearch = memo(() => {
               className="
               w-[300px] h-[35px] bg-[#e1e1e1] p-[6px] 
               rounded-[4px] text-black font-[500] text-[14px] outline-none
-              placeholder-black
+              placeholder-black max-sm:h-[20px] max-sm:text-[12px] max-sm:rounded-[4px]
               "
             />
           </form>
