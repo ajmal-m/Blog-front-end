@@ -28,8 +28,9 @@ const  Comment =  memo(({ postId, count }: { postId: string; count: number;}) =>
 
 
     const closeModal = useCallback(( ) => {
+      setCommentInput(false);
       setOpenModal(false);
-    }, [openModal ])
+    }, [openModal, showCommentInput ])
 
     return(
         <>
